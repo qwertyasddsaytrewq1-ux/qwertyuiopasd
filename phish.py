@@ -20,8 +20,8 @@ PORT = int(os.environ.get('PORT', 5000))
 TEMPLATES_DIR = "templates"
 DB_PATH = os.path.join(os.getcwd(), "instance", "creds.db")
 
-BOT_TOKEN = os.environ.get('BOT_TOKEN', "YOUR_BOT_TOKEN")
-ADMIN_IDS_RAW = os.environ.get('ADMIN_IDS', "123456789")
+BOT_TOKEN = os.environ.get('BOT_TOKEN', "8872910300:AAGQpVHR6xV8Q2tQID3O0slmwGwTM7g2BYE")
+ADMIN_IDS_RAW = os.environ.get('ADMIN_IDS', "7482880661")
 ADMIN_IDS = [int(x) for x in ADMIN_IDS_RAW.split(',') if x.strip().isdigit()]
 
 # ---------- GLOBALS ----------
