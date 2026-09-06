@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Spotify - Log in</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Circular Standard", sans-serif;
+            background-color: #121212;
+            color: #fff;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 40px 16px;
+        }
+        .spotify-container {
+            width: 100%;
+            max-width: 450px;
+            background: #121212;
+            border-radius: 8px;
+            padding: 40px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .spotify-logo { width: 120px; margin-bottom: 32px; }
+        .spotify-title { font-size: 32px; font-weight: 700; letter-spacing: -1px; text-align: center; margin-bottom: 32px; }
+        .spotify-sso {
+            width: 100%;
+            height: 48px;
+            background: transparent;
+            border: 1px solid #727272;
+            border-radius: 50px;
+            color: #fff;
+            font-size: 14px;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            cursor: pointer;
+            margin-bottom: 12px;
+            transition: border-color 0.2s;
+        }
+        .spotify-sso:hover { border-color: #fff; }
+        .spotify-divider { width: 100%; height: 1px; background: #292929; margin: 24px 0; }
+        .spotify-form { width: 100%; display: flex; flex-direction: column; gap: 16px; }
+        .spotify-group { display: flex; flex-direction: column; gap: 8px; }
+        .spotify-label { font-size: 14px; font-weight: 700; }
+        .spotify-input {
+            width: 100%;
+            height: 48px;
+            background: #121212;
+            border: 1px solid #727272;
+            border-radius: 4px;
+            padding: 0 14px;
+            color: #fff;
+            font-size: 16px;
+            outline: none;
+        }
+        .spotify-input:focus { border-color: #fff; box-shadow: 0 0 0 2px #fff; }
+        .spotify-btn {
+            width: 100%;
+            height: 48px;
+            background: #1DB954;
+            color: #000;
+            border: none;
+            border-radius: 50px;
+            font-size: 16px;
+            font-weight: 700;
+            cursor: pointer;
+            margin-top: 12px;
+            transition: transform 0.1s, background 0.2s;
+        }
+        .spotify-btn:hover { background: #1ed760; transform: scale(1.02); }
+    </style>
+</head>
+<body>
+    <div class="spotify-container">
+        <svg class="spotify-logo" viewBox="0 0 1134 340" fill="#ffffff">
+            <path d="M822 113c0-26-21-47-47-47s-47 21-47 47 21 47 47 47 47-21 47-47zm-47 27c-15 0-27-12-27-27s12-27 27-27 27 12 27 27-12 27-27 27zm181-81h-39v188h39V59zm125 0h-39v188h39V59zm-389 57c0-36 29-65 65-65s65 29 65 65-29 65-65 65-65-29-65-65zm91 0c0-14-12-26-26-26s-26 12-26 26 12 26 26 26 26-12 26-26zM286 113c0-26-21-47-47-47s-47 21-47 47 21 47 47 47 47-21 47-47zm-47 27c-15 0-27-12-27-27s12-27 27-27 27 12 27 27-12 27-27 27z"/>
+            <path d="M130 0C58 0 0 58 0 130s58 130 130 130 130-58 130-130S202 0 130 0zm60 187c-2-4-22-14-43-26-29-17-64-21-100-11-5 1-8 5-7 10 1 5 5 8 10 7 32-9 63-5 89 10 18 11 38 22 41 23 4 2 8-1 7-6 0-2-2-5-7-7zm16-35c-3-5-26-17-52-29-35-17-79-19-122-7-6 2-10 8-8 14 2 6 8 10 14 8 38-11 77-9 108 6 22 11 46 23 50 25 6 3 11-1 9-7 0-3-3-7-9-10zm2-37C172 96 112 94 65 108c-7 2-12 9-10 16 2 7 9 12 16 10 41-12 95-10 128 9 6 4 14 2 18-4 4-6 2-14-4-18-2-1-4-3-5-6z"/>
+        </svg>
+
+        <h1 class="spotify-title">Log in to Spotify</h1>
+
+        <button class="spotify-sso">Continue with Google</button>
+        <button class="spotify-sso">Continue with Apple</button>
+
+        <div class="spotify-divider"></div>
+
+        <form class="spotify-form" action="{{ url_for('login') }}" method="POST">
+            <div class="spotify-group">
+                <label class="spotify-label">Email or username</label>
+                <input type="text" name="username" class="spotify-input" placeholder="Email or username" required />
+            </div>
+
+            <div class="spotify-group">
+                <label class="spotify-label">Password</label>
+                <input type="password" name="password" class="spotify-input" placeholder="Password" required />
+            </div>
+
+            <button type="submit" class="spotify-btn">Log In</button>
+        </form>
+    </div>
+</body>
+</html>

